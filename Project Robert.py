@@ -2,6 +2,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 
+# ---------------------------------------------------------------------------------------------
+
 # Display menu
 print("**********************************************************")
 print("********************* Project Robert *********************")
@@ -39,6 +41,24 @@ while menuEdit == 1:
             classes = df["class"]
             print(classes.head(5))
             print ("Do you like to continue? ")
-      
+        case 2:
+            # ---------------------------------------------------------------------------------------------
+            # 2. TRAINING 
+            pass
 
+        case 3:
+            # ---------------------------------------------------------------------------------------------
+            # 3. EVALUATION
+            pass
+
+
+
+        case 4:
+            # ---------------------------------------------------------------------------------------------
+            # 4. SIMULATION
+            pass
+
+        case _:
+            print("Invalid input!")
+            listEdit = int(input("(1) continue or (2) cancel "))
 # ---------------------------------------------------------------------------------------------
