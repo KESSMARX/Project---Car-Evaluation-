@@ -6,10 +6,9 @@ from sklearn.neighbors import KNeighborsClassifier
 
 
 
-
-
 # ---------------------------------------------------------------------------------------------
-
+url = input("Insert the name for the dataset")
+df = pd.read_csv("dataset")
 
 # ---------------------------------------------------------------------------------------------
 
