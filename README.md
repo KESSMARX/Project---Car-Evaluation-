@@ -5,7 +5,7 @@ Ideally you want to create a menu, which will allow the user to
 
 1. Load the dataset
    The software must allow the user to type the dataset name, tell the user it was loaded correctly and then print:
-   ● The first top 10 rows.
+   ● The first top 10 rows
    ● Some basic statistics
    
 2. Train a classification model with the current version of the dataset
