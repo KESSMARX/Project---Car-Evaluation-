@@ -42,7 +42,7 @@ while menuEdit == 1:
 
 
 
-            print ("Do you like to continue? ")
+            menuEdit = int(input("(1) continue or (2) cancel "))
 
 
         case 2:
@@ -64,6 +64,6 @@ while menuEdit == 1:
 
         case _:
             print("Invalid input!")
-            listEdit = int(input("(1) continue or (2) cancel "))
+            menuEdit = int(input("(1) continue or (2) cancel "))
 
 # ---------------------------------------------------------------------------------------------
