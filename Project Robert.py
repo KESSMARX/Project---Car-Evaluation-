@@ -31,18 +31,15 @@ while menuEdit == 1:
 
 
 # ---------------------------------------------------------------------------------------------
-<<<<<<< HEAD
 # 1. LOADING
     
+
+    url = input("Insert the name for the dataset")
+    df = pd.read_csv(url)
+
+
+
     print ("Do you like to continue? ")
-=======
-url = input("Insert the name for the dataset")
-df = pd.read_csv("dataset")
-
-
-
->>>>>>> 540dc997a35c7e0f2600bb432c9e77cf329da0a6
-
 
 # ---------------------------------------------------------------------------------------------
 # 2. TRAINING 
