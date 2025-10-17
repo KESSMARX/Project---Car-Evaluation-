@@ -29,31 +29,16 @@ while menuEdit == 1:
         print ("ERROR - wrong input!")
         userChoice = int(input("Please type in a number: "))
 
-
-# ---------------------------------------------------------------------------------------------
-# 1. LOADING
-    
-    def loadData():
-      url = input("Insert the name for the dataset")
-      df = pd.read_csv(url)
-      classes = df["class"]
-      print(classes)
-
-    print ("Do you like to continue? ")
-
-# ---------------------------------------------------------------------------------------------
-# 2. TRAINING 
-
-
-
-# ---------------------------------------------------------------------------------------------
-# 3. EVALUATION
-
-
-
-# ---------------------------------------------------------------------------------------------
-# 4. SIMULATION
-
-
+    match userChoice:
+        case 1:
+            # ---------------------------------------------------------------------------------------------
+            # 1. LOADING
+          def loadData():
+            url = input("Insert the name for the dataset")
+            df = pd.read_csv(url)
+            classes = df["class"]
+            print(classes.head(5))
+            print ("Do you like to continue? ")
+      
 
 # ---------------------------------------------------------------------------------------------
