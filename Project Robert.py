@@ -15,7 +15,6 @@ print("*(2) Train the data set.                                 *")
 print("*(3) Evaluation of the data set.                         *")
 print("*(4) Simulation of the data set.                         *")
 
-
 # Variables set up
 menuEdit = 1
 
@@ -32,9 +31,17 @@ while menuEdit == 1:
 
 
 # ---------------------------------------------------------------------------------------------
+<<<<<<< HEAD
 # 1. LOADING
     
     print ("Do you like to continue? ")
+=======
+url = input("Insert the name for the dataset")
+df = pd.read_csv("dataset")
+
+
+
+>>>>>>> 540dc997a35c7e0f2600bb432c9e77cf329da0a6
 
 
 # ---------------------------------------------------------------------------------------------
