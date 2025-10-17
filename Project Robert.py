@@ -33,11 +33,11 @@ while menuEdit == 1:
 # ---------------------------------------------------------------------------------------------
 # 1. LOADING
     
-
-    url = input("Insert the name for the dataset")
-    df = pd.read_csv(url)
-
-
+    def loadData():
+      url = input("Insert the name for the dataset")
+      df = pd.read_csv(url)
+      classes = df["class"]
+      print(classes)
 
     print ("Do you like to continue? ")
 
