@@ -26,3 +26,8 @@ Ideally you want to create a menu, which will allow the user to
    If the user trained methods, then it asks for the user to input information related to the attributes used for the problem and uses
    that information to ask the classification model for the correct response.
    The output of this method is the predicted class.
+
+
+TO DO
+- create a menu to load, train, evaluate and simulate a dataset
+- 
