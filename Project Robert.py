@@ -21,7 +21,9 @@ print("**********************************************************")
 # Variables set up
 userChoice = 0
 menuEdit = 1
-successLoad = 0
+successLoad = 0 
+features = ""
+classes = ""     
 
 # Function set up
 def loadData():
@@ -34,6 +36,18 @@ def loadData():
     print(df.info())
     print(df.describe())
     print(df.shape)
+
+    # Creates a dataframe using the drop method, which has two parameters:
+    #   The first parameter tells which labels to remove (Columns Name) or 
+    #   The second parameter tells whether to remove a row index or	
+    #   a column name. axis=1 means we want to remove a column.
+    global features # calling the global variable
+    features = df.drop("class",axis=1)
+
+    # Creates a dataframe from just one column:
+    global classes # calling the global variable
+    classes = df["class"]
+
 
 # While loop
 while menuEdit == 1:
@@ -68,7 +82,7 @@ while menuEdit == 1:
                 print("**********************************************************")
 
                 userChoice = int(input("\nPlease type in the number of the choosen algorithm: "))
-
+            
                 match userChoice:
                     case 1:
                         # Split the data into train/test sets
