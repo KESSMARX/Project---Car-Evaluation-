@@ -1,7 +1,8 @@
 import pandas as pd
 import sys
 from sklearn.model_selection import train_test_split                 # Imports functionality from Scikit Learning
-from sklearn.neighbors import KNeighborsClassifier                   # Imports kNN Regressor Implementation from Scikit Learning
+from sklearn.neighbors import KNeighborsClassifier                   # Imports kNN Classifier Implementation from Scikit Learning
+from sklearn.neighbors import KNeighborsRegressor                    # Imports kNN Regressor Implementation from Scikit Learning
 from sklearn.compose import ColumnTransformer                        # Imports ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder                      # Imports OneHotEncoder
 from sklearn.preprocessing import MinMaxScaler                       # Imports the MinMaxScaler for Normalization
@@ -30,7 +31,9 @@ menuEdit = 1
 successLoad = 0  
 attemps = 3                                     # Attemps until the code asks if you want to exit
 userattempt = 1                                 # Attemp set to check
+preprocessor = 0
 knn = KNeighborsClassifier(n_neighbors=1)       # Creates a Knn Classifier Object with k=1
+knnr = KNeighborsRegressor(n_neighbors=1)       # Creates a Knn Regressor Object with k=1
 predictions = 0
 features = 0
 classes = 0
@@ -55,6 +58,7 @@ def loadData():
             print("**********************************************************")
             print(df.shape)
             print("**********************************************************")
+
             # Creates a dataframe using the drop method, which has two parameters:
             # The first parameter tells which labels to remove (Columns Name) or 
             # The second parameter tells whether to remove a row index or a column name. 
@@ -65,8 +69,9 @@ def loadData():
             # Creates a dataframe from just one column:
             global classes # calling global variable
             classes = df["class"]
-            
+    
             break
+
         except: 
             error()
             menu()
@@ -99,6 +104,16 @@ def end():
     sys.exit()
 
 
+def defNumCat():
+    categorical_features = ["buying", "maint", "doors", "persons", "lug_boot", "safety"] # Define the columns with categorical features
+    
+    # Updates the Preprocessor to consider the categorical data columns
+    global preprocessor
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("cat", OneHotEncoder(), categorical_features)
+        ]
+    )
 
 # While loop
 while menuEdit == 1:
@@ -135,22 +150,6 @@ while menuEdit == 1:
                 print("*(2) Split the data into stratified train sets.          *")
                 print("**********************************************************")
 
-                # -----------------------------------------------------------------------------------------
-
-                categorical_features = ["buying", "maint", "lug_boot", "safety"] # Define the columns with categorical features
-                
-                numeric_features = ["doors", "persons"] # Define the numeric attributes columns
-
-                # Updates the Preprocessor to consider the numeric and categorical data columns
-                preprocessor = ColumnTransformer(
-                    transformers=[
-                        ("num", MinMaxScaler(), numeric_features),
-                        ("cat", OneHotEncoder(), categorical_features)
-                    ]
-                )
-
-                # -----------------------------------------------------------------------------------------
-
 
                 for i in range(attemps): # Able to run into an error x attemps until you have the possibility to exit this action
                     try:
@@ -161,11 +160,19 @@ while menuEdit == 1:
                                 features_train, features_test, classes_train, classes_test = train_test_split(
                                 features, classes, test_size=0.2, random_state=10
                                 )
-                        
-                                # Trains this Knn Classifier with the training set obtained previously:
-                                knn.fit(features_train, classes_train)
 
-                                predictions = knn.predict(features_test)
+                                defNumCat()
+                        
+                                # Apply preprocessing to the training set:
+                                preprocessed_features_train = preprocessor.fit_transform(features_train)
+
+                                # Apply preprocessing to the test set:
+                                preprocessed_features_test = preprocessor.transform(features_test)
+
+                                # Trains this Knn Classifier with the training set obtained previously:
+                                knn.fit(preprocessed_features_train, classes_train)
+
+                                predictions = knn.predict(preprocessed_features_test)
 
                                 print ("You have trained this set of data!")
                                 break
@@ -175,6 +182,8 @@ while menuEdit == 1:
                                 strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
                                 features, classes, test_size=0.4, random_state=10, stratify=classes
                                 )
+
+                                defNumCat()
                         
                                 # Trains this Knn Classifier with the training set obtained previously:
                                 knn.fit(strat_feat_train, strat_classes_train)
@@ -189,13 +198,13 @@ while menuEdit == 1:
     
                     except:
                         error()
+                
             menu()
 
         case 3:
             # ---------------------------------------------------------------------------------------------
             # 3. EVALUATION
             pass
-
 
 
         case 4:
@@ -217,4 +226,4 @@ if menuEdit == 2:
 
 # ---------------------------------------------------------------------------------------------
 # Code Testing
-print (train_test_split)
+# print (train_test_split)
