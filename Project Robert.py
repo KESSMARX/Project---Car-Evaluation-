@@ -1,7 +1,12 @@
 import pandas as pd
 import sys
-from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split                 # Imports functionality from Scikit Learning
+from sklearn.neighbors import KNeighborsClassifier                   # Imports kNN Regressor Implementation from Scikit Learning
+from sklearn.compose import ColumnTransformer                        # Imports ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder                      # Imports OneHotEncoder
+from sklearn.preprocessing import MinMaxScaler                       # Imports the MinMaxScaler for Normalization
+from sklearn.metrics import mean_absolute_error, mean_squared_error  # Imports Evaluation Metrics from Scikit Learning
+
 
 # ---------------------------------------------------------------------------------------------
 
@@ -23,11 +28,12 @@ print("**********************************************************")
 userChoice = 0
 menuEdit = 1
 successLoad = 0  
-knn = KNeighborsClassifier(n_neighbors=1)     # Creates a Knn Classifier Object with k=1
+attemps = 3                                     # Attemps until the code asks if you want to exit
+userattempt = 1                                 # Attemp set to check
+knn = KNeighborsClassifier(n_neighbors=1)       # Creates a Knn Classifier Object with k=1
 predictions = 0
 features = 0
 classes = 0
-userattempt = 1
 
 # Function set up
 def loadData():
@@ -38,27 +44,32 @@ def loadData():
             global successLoad # calling the global variable 
             successLoad = 1    # telling system the load was successfull
             df = pd.read_csv(url)
-            print("The dataset was loaded sucessfully.")
+            print("The dataset was loaded sucessfully.\n")
+            print("Overview of some important data information and statistics")
+            print("**********************************************************")
             print(df.head(10))
+            print("**********************************************************")
             print(df.info())
+            print("**********************************************************")
             print(df.describe())
+            print("**********************************************************")
             print(df.shape)
+            print("**********************************************************")
             # Creates a dataframe using the drop method, which has two parameters:
-            #   The first parameter tells which labels to remove (Columns Name) or 
-            #   The second parameter tells whether to remove a row index or	
-            #   a column name. axis=1 means we want to remove a column.
-            global features # calling the global variable
+            # The first parameter tells which labels to remove (Columns Name) or 
+            # The second parameter tells whether to remove a row index or a column name. 
+            # axis=1 means we want to remove a column.
+            global features # calling global variable
             features = df.drop("class",axis=1)
 
             # Creates a dataframe from just one column:
-            global classes # calling the global variable
+            global classes # calling global variable
             classes = df["class"]
             break
         except: 
             error()
-            userattempt = int(input("\n(1) continue or (2) cancel "))
-            if userattempt == 2:
-                end()
+            menu()
+            print ("TEST2")
 
 
 def error():
@@ -66,9 +77,23 @@ def error():
 
 
 def menu():
-    global menuEdit
-    menuEdit = int(input("\n(1) continue or (2) cancel "))
-
+    global userattempt, menuEdit
+    while userattempt == 1:
+        try:
+            menuEdit = int(input("\n(1) continue or (2) cancel "))
+            if menuEdit == 1: # Approval of integer 1
+                 
+                 break
+            elif menuEdit == 2: # Approval of integer 2
+                end()
+                print ("TEST")
+                break                
+            else:
+                 raise
+        
+        except: 
+            error()
+            print ("TEST1")
      
 
 def end():
@@ -112,8 +137,24 @@ while menuEdit == 1:
                 print("*(2) Split the data into stratified train sets.          *")
                 print("**********************************************************")
 
-                userattempt = 1
-                while userattempt == 1:
+                # -----------------------------------------------------------------------------------------
+
+                categorical_features = ["buying", "maint", "lug_boot", "safety"] # Define the columns with categorical features
+                
+                numeric_features = ["doors", "persons"] # Define the numeric attributes columns
+
+                # Updates the Preprocessor to consider the numeric and categorical data columns
+                preprocessor = ColumnTransformer(
+                    transformers=[
+                        ("num", MinMaxScaler(), numeric_features),
+                        ("cat", OneHotEncoder(), categorical_features)
+                    ]
+                )
+
+                # -----------------------------------------------------------------------------------------
+
+
+                for i in range(attemps): # Able to run into an error x attemps until you have the possibility to exit this action
                     try:
                         userChoice = int(input("\nPlease type in the number of the choosen algorithm: "))
                         match userChoice:
@@ -129,6 +170,7 @@ while menuEdit == 1:
                                                 predictions = knn.predict(features_test)
 
                                                 print ("You have trained this set of data!")
+                                                break
 
                                             case 2:
                                                 # Split the data into STRATIFIED train/test sets:
@@ -142,15 +184,13 @@ while menuEdit == 1:
                                                 predictions = knn.predict(strat_feat_test)
                                             
                                                 print ("You have trained this stratified set of data!")  
+                                                break
 
                                             case _: 
-                                                error()
-                                                menu ()
-                        break        
+                                                raise      
                    
                     except:
                         error()
-
             menu()
 
         case 3:
