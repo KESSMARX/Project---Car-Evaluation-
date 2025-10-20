@@ -22,8 +22,8 @@ print("**********************************************************")
 userChoice = 0
 menuEdit = 1
 successLoad = 0 
-features = ""
-classes = ""     
+features = 0
+classes = 0    
 
 # Function set up
 def loadData():
@@ -48,6 +48,13 @@ def loadData():
     global classes # calling the global variable
     classes = df["class"]
 
+def train():
+    # Creates a Knn Classifier Object with k=1
+    knn = KNeighborsClassifier(n_neighbors=1)
+
+    # Trains this Knn Classifier with the training set obtained previously:
+    knn.fit(strat_feat_train, strat_classes_train)
+
 
 # While loop
 while menuEdit == 1:
@@ -71,6 +78,10 @@ while menuEdit == 1:
         case 2:
             # ---------------------------------------------------------------------------------------------
             # 2. TRAINING 
+            if successLoad == 0:
+                print ("There is no data set loaded yet! Please follow further instructions.")                
+                loadData()
+
             if successLoad == 1:
                 print("**********************************************************")
                 print("******************* Training Algorithms ******************")
@@ -89,16 +100,18 @@ while menuEdit == 1:
                         features_train, features_test, classes_train, classes_test = train_test_split(
                         features, classes, test_size=0.2, random_state=10
                         )
+#                        train()
+                        print ("You have trained this set of data!")
 
                     case 2:
                         # Split the data into STRATIFIED train/test sets:
                         strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
                         features, classes, test_size=0.4, random_state=10, stratify=classes
                         )
+#                        train()
+                        print ("You have trained this stratified set of data!")                     
 
 
-            else:
-                loadData()
 
 
             menuEdit = int(input("\n(1) continue or (2) cancel "))
@@ -125,3 +138,9 @@ while menuEdit == 1:
 # Code ending
 if menuEdit == 2:
     print ("\nThanks for your time and have a great day!\n")
+
+
+
+# ---------------------------------------------------------------------------------------------
+# Code Testing
+print (train_test_split)
