@@ -21,9 +21,16 @@ print("**********************************************************")
 # Variables set up
 userChoice = 0
 menuEdit = 1
+<<<<<<< HEAD
 successLoad = 0 
 features = 0
 classes = 0    
+=======
+successLoad = 0  
+features = ""
+classes = "" 
+userattempt = 1    
+>>>>>>> 43e564ec2dc2ebbd32a47e993652bdfa2a151446
 
 # Function set up
 def loadData():
@@ -58,13 +65,13 @@ def train():
 
 # While loop
 while menuEdit == 1:
-    
-    try:
-        userChoice = int(input("\nPlease type in the number of the choosen operation: "))
-    
-    except:
-        print ("\nERROR - wrong input!")
-        userChoice = int(input("Please type in a number: "))
+    while userattempt == 1:
+        try:
+            userChoice = int(input("\nPlease type in the number of the choosen operation: "))
+            userattempt = 0        
+        except:
+            print ("\nERROR - wrong input!")
+        
 
     match userChoice:
         case 1:
@@ -79,10 +86,16 @@ while menuEdit == 1:
             # ---------------------------------------------------------------------------------------------
             # 2. TRAINING 
             if successLoad == 0:
+<<<<<<< HEAD
                 print ("There is no data set loaded yet! Please follow further instructions.")                
                 loadData()
 
             if successLoad == 1:
+=======
+                loadData()
+
+            elif successLoad == 1:
+>>>>>>> 43e564ec2dc2ebbd32a47e993652bdfa2a151446
                 print("**********************************************************")
                 print("******************* Training Algorithms ******************")
                 print("*                                                        *")
@@ -100,18 +113,26 @@ while menuEdit == 1:
                         features_train, features_test, classes_train, classes_test = train_test_split(
                         features, classes, test_size=0.2, random_state=10
                         )
+<<<<<<< HEAD
 #                        train()
                         print ("You have trained this set of data!")
+=======
+                        successLoad = 0
+>>>>>>> 43e564ec2dc2ebbd32a47e993652bdfa2a151446
 
                     case 2:
                         # Split the data into STRATIFIED train/test sets:
                         strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
                         features, classes, test_size=0.4, random_state=10, stratify=classes
                         )
+<<<<<<< HEAD
 #                        train()
                         print ("You have trained this stratified set of data!")                     
 
 
+=======
+                        successLoad = 0
+>>>>>>> 43e564ec2dc2ebbd32a47e993652bdfa2a151446
 
 
             menuEdit = int(input("\n(1) continue or (2) cancel "))
@@ -139,8 +160,12 @@ while menuEdit == 1:
 if menuEdit == 2:
     print ("\nThanks for your time and have a great day!\n")
 
+<<<<<<< HEAD
 
 
 # ---------------------------------------------------------------------------------------------
 # Code Testing
 print (train_test_split)
+=======
+print(train_test_split)
+>>>>>>> 43e564ec2dc2ebbd32a47e993652bdfa2a151446
