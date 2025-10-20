@@ -21,9 +21,10 @@ print("**********************************************************")
 # Variables set up
 userChoice = 0
 menuEdit = 1
-successLoad = 0 
+successLoad = 0  
 features = ""
-classes = ""     
+classes = "" 
+userattempt = 1    
 
 # Function set up
 def loadData():
@@ -51,13 +52,13 @@ def loadData():
 
 # While loop
 while menuEdit == 1:
-    
-    try:
-        userChoice = int(input("\nPlease type in the number of the choosen operation: "))
-    
-    except:
-        print ("\nERROR - wrong input!")
-        userChoice = int(input("Please type in a number: "))
+    while userattempt == 1:
+        try:
+            userChoice = int(input("\nPlease type in the number of the choosen operation: "))
+            userattempt = 0        
+        except:
+            print ("\nERROR - wrong input!")
+        
 
     match userChoice:
         case 1:
@@ -71,7 +72,10 @@ while menuEdit == 1:
         case 2:
             # ---------------------------------------------------------------------------------------------
             # 2. TRAINING 
-            if successLoad == 1:
+            if successLoad == 0:
+                loadData()
+
+            elif successLoad == 1:
                 print("**********************************************************")
                 print("******************* Training Algorithms ******************")
                 print("*                                                        *")
@@ -89,16 +93,14 @@ while menuEdit == 1:
                         features_train, features_test, classes_train, classes_test = train_test_split(
                         features, classes, test_size=0.2, random_state=10
                         )
+                        successLoad = 0
 
                     case 2:
                         # Split the data into STRATIFIED train/test sets:
                         strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
                         features, classes, test_size=0.4, random_state=10, stratify=classes
                         )
-
-
-            else:
-                loadData()
+                        successLoad = 0
 
 
             menuEdit = int(input("\n(1) continue or (2) cancel "))
@@ -125,3 +127,5 @@ while menuEdit == 1:
 # Code ending
 if menuEdit == 2:
     print ("\nThanks for your time and have a great day!\n")
+
+print(train_test_split)
