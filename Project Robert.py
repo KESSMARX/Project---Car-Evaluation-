@@ -70,7 +70,6 @@ def loadData():
         except: 
             error()
             menu()
-            print ("TEST2")
 
 
 def error():
@@ -82,20 +81,18 @@ def menu():
     while userattempt == 1:
         try:
             menuEdit = int(input("\n(1) continue or (2) cancel "))
-            if menuEdit == 1: # Approval of integer 1
-                 
-                 break
-            elif menuEdit == 2: # Approval of integer 2
-                end()
-                print ("TEST")
-                break                
+            if 1<= menuEdit <= 2: # Approval of integer (1 or 2)
+                break   
             else:
-                 raise
+                raise        
         
         except: 
             error()
-            print ("TEST1")
-     
+    
+    if menuEdit == 2: # Approval of integer 2
+        end()
+        pass
+        
 
 def end():
     print ("\nThanks for your time and have a great day!\n")
