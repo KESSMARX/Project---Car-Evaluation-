@@ -57,6 +57,8 @@ def loadData():
         except: 
             print ("ERROR")
             userattempt = int(input("\n(1) continue or (2) cancel "))
+            if userattempt == 2:
+                end()
     
 def end():
     print ("\nThanks for your time and have a great day!\n")
