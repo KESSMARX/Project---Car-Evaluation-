@@ -2,6 +2,7 @@ import pandas as pd
 import sys
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import LabelEncoder
 
 # ---------------------------------------------------------------------------------------------
 
@@ -24,6 +25,7 @@ userChoice = 0
 menuEdit = 1
 successLoad = 0  
 knn = KNeighborsClassifier(n_neighbors=1)     # Creates a Knn Classifier Object with k=1
+le = LabelEncoder # Creates an object to turn strings into ints
 predictions = 0
 features = 0
 classes = 0
@@ -38,6 +40,7 @@ def loadData():
             global successLoad # calling the global variable 
             successLoad = 1    # telling system the load was successfull
             df = pd.read_csv(url)
+            
             print("The dataset was loaded sucessfully.")
             print(df.head(10))
             print(df.info())
@@ -53,6 +56,7 @@ def loadData():
             # Creates a dataframe from just one column:
             global classes # calling the global variable
             classes = df["class"]
+            
             break
         except: 
             error()
@@ -117,42 +121,37 @@ while menuEdit == 1:
                     try:
                         userChoice = int(input("\nPlease type in the number of the choosen algorithm: "))
                         match userChoice:
-                                            case 1:
-                                                # Split the data into train/test sets
-                                                features_train, features_test, classes_train, classes_test = train_test_split(
-                                                features, classes, test_size=0.2, random_state=10
-                                                )
-                                        
-                                                # Trains this Knn Classifier with the training set obtained previously:
-                                                knn.fit(features_train, classes_train)
+                            case 1:
+                                # Split the data into train/test sets
+                                features_train, features_test, classes_train, classes_test = train_test_split(
+                                features, classes, test_size=0.2, random_state=10
+                                )
+                        
+                                # Trains this Knn Classifier with the training set obtained previously:
+                                knn.fit(features_train, classes_train)
 
-                                                predictions = knn.predict(features_test)
+                                predictions = knn.predict(features_test)
 
-                                                print ("You have trained this set of data!")
+                                print ("You have trained this set of data!")
 
-                                            case 2:
-                                                # Split the data into STRATIFIED train/test sets:
-                                                strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
-                                                features, classes, test_size=0.4, random_state=10, stratify=classes
-                                                )
-                                        
-                                                # Trains this Knn Classifier with the training set obtained previously:
-                                                knn.fit(strat_feat_train, strat_classes_train)
+                            case 2:
+                                # Split the data into STRATIFIED train/test sets:
+                                strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
+                                features, classes, test_size=0.4, random_state=10, stratify=classes
+                                )
+                        
+                                # Trains this Knn Classifier with the training set obtained previously:
+                                knn.fit(strat_feat_train, strat_classes_train)
 
-                                                predictions = knn.predict(strat_feat_test)
-                                            
-                                                print ("You have trained this stratified set of data!")  
-
-                                            case _: 
-                                                error()
-                                                menu ()
+                                predictions = knn.predict(strat_feat_test)
+                            
+                                print ("You have trained this stratified set of data!")  
+                            case _:
+                                error(), menu()
                         break        
                    
                     except:
-                        error()
-
-            menu()
-
+                        error(), menu()
         case 3:
             # ---------------------------------------------------------------------------------------------
             # 3. EVALUATION
