@@ -55,11 +55,22 @@ def loadData():
             classes = df["class"]
             break
         except: 
-            print ("ERROR")
+            error()
             userattempt = int(input("\n(1) continue or (2) cancel "))
             if userattempt == 2:
                 end()
-    
+
+
+def error():
+    print ("\nERROR - wrong input!")
+
+
+def menu():
+    global menuEdit
+    menuEdit = int(input("\n(1) continue or (2) cancel "))
+
+     
+
 def end():
     print ("\nThanks for your time and have a great day!\n")
     sys.exit()
@@ -73,7 +84,7 @@ while menuEdit == 1:
             userChoice = int(input("\nPlease type in the number of the choosen operation: "))
             break        
         except:
-            print ("\nERROR - wrong input!")
+             error()
         
 
     match userChoice:
@@ -81,8 +92,7 @@ while menuEdit == 1:
             # ---------------------------------------------------------------------------------------------
             # 1. LOADING
             loadData()
-
-            menuEdit = int(input("\n(1) continue or (2) cancel "))
+            menu()
 
 
         case 2:
@@ -102,39 +112,46 @@ while menuEdit == 1:
                 print("*(2) Split the data into stratified train sets.          *")
                 print("**********************************************************")
 
-                userChoice = int(input("\nPlease type in the number of the choosen algorithm: "))
-            
-                match userChoice:
-                    case 1:
-                        # Split the data into train/test sets
-                        features_train, features_test, classes_train, classes_test = train_test_split(
-                        features, classes, test_size=0.2, random_state=10
-                        )
-                 
-                        # Trains this Knn Classifier with the training set obtained previously:
-                        knn.fit(features_train, classes_train)
+                userattempt = 1
+                while userattempt == 1:
+                    try:
+                        userChoice = int(input("\nPlease type in the number of the choosen algorithm: "))
+                        match userChoice:
+                                            case 1:
+                                                # Split the data into train/test sets
+                                                features_train, features_test, classes_train, classes_test = train_test_split(
+                                                features, classes, test_size=0.2, random_state=10
+                                                )
+                                        
+                                                # Trains this Knn Classifier with the training set obtained previously:
+                                                knn.fit(features_train, classes_train)
 
-                        predictions = knn.predict(features_test)
+                                                predictions = knn.predict(features_test)
 
-                        print ("You have trained this set of data!")
+                                                print ("You have trained this set of data!")
 
-                    case 2:
-                        # Split the data into STRATIFIED train/test sets:
-                        strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
-                        features, classes, test_size=0.4, random_state=10, stratify=classes
-                        )
-                 
-                        # Trains this Knn Classifier with the training set obtained previously:
-                        knn.fit(strat_feat_train, strat_classes_train)
+                                            case 2:
+                                                # Split the data into STRATIFIED train/test sets:
+                                                strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
+                                                features, classes, test_size=0.4, random_state=10, stratify=classes
+                                                )
+                                        
+                                                # Trains this Knn Classifier with the training set obtained previously:
+                                                knn.fit(strat_feat_train, strat_classes_train)
 
-                        predictions = knn.predict(strat_feat_test)
-                      
-                        print ("You have trained this stratified set of data!")                     
+                                                predictions = knn.predict(strat_feat_test)
+                                            
+                                                print ("You have trained this stratified set of data!")  
 
+                                            case _: 
+                                                error()
+                                                menu ()
+                        break        
+                   
+                    except:
+                        error()
 
-
-
-            menuEdit = int(input("\n(1) continue or (2) cancel "))
+            menu()
 
         case 3:
             # ---------------------------------------------------------------------------------------------
@@ -149,9 +166,8 @@ while menuEdit == 1:
             pass
 
         case _:
-            print("Invalid input!")
-            menuEdit = int(input("\n(1) continue or (2) cancel "))
-
+            error()
+            menu()
 
     
 # ---------------------------------------------------------------------------------------------
