@@ -120,7 +120,10 @@ while menuEdit == 1:
     while userattempt == 1:
         try:
             userChoice = int(input("\nPlease type in the number of the choosen operation: "))
-            break        
+            if 1<= userChoice <=4:
+                break       
+            else:
+                raise
         except:
              error()
         
@@ -216,11 +219,6 @@ while menuEdit == 1:
             error()
             menu()
 
-    
-# ---------------------------------------------------------------------------------------------
-# Code ending
-if menuEdit == 2:
-    end()
 
 
 
