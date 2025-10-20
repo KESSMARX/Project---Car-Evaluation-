@@ -1,16 +1,16 @@
 ----- Task description -----
 
 You will need to develop an application around the classification task.
-Ideally you want to create a menu, which will allow the user to
+Ideally you want to create a menu, which will allow the user to 
 
 1. Load the dataset
    The software must allow the user to type the dataset name, tell the user it was loaded correctly and then print:
-   ● The first top 10 rows
-   ● Some basic statistics
+   ● The first top 10 rows CHECK
+   ● Some basic statistics CHECK
    
 2. Train a classification model with the current version of the dataset
-   The software must allow the user to select between at least 2 types of supervised machine learning algorithms to train the models.
-   If no dataset was loaded, the software must ask the user to load a dataset first.
+   The software must allow the user to select between at least 2 types of supervised machine learning algorithms to train the models. IN PROGRESS
+   If no dataset was loaded, the software must ask the user to load a dataset first. CHECK
    
 3. Evaluate and save the performance of the classification model
    The software must enable the user to choose whether or not they want to load a specific file for evaluation.
@@ -20,14 +20,12 @@ Ideally you want to create a menu, which will allow the user to
    If the user says yes, the software asks for the file name and saves the results information there.
    
 5. Simulate a real environment
-   Simulate a real environment where the user can input a new unseen example without the class information and the system will return the result from using
-   the classification model.
+   Simulate a real environment where the user can input a new unseen example without the class information and the system will return the result from using the classification model.
    If the user did not train any models yet, the software must tell the user that first they need to train a classification model.
-   If the user trained methods, then it asks for the user to input information related to the attributes used for the problem and uses
-   that information to ask the classification model for the correct response.
+   If the user trained methods, then it asks for the user to input information related to the attributes used for the problem and uses that information to ask the classification model for the correct response.
    The output of this method is the predicted class.
 
 
 TO DO
-- create a menu to load, train, evaluate and simulate a dataset
+- create a menu to load, train, evaluate and simulate a dataset CHECK
 - 

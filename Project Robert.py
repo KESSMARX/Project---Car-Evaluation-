@@ -33,7 +33,6 @@ attemps = 3                                     # Attemps until the code asks if
 userattempt = 1                                 # Attemp set to check
 preprocessor = 0
 knn = KNeighborsClassifier(n_neighbors=1)       # Creates a Knn Classifier Object with k=1
-knnr = KNeighborsRegressor(n_neighbors=1)       # Creates a Knn Regressor Object with k=1
 predictions = 0
 features = 0
 classes = 0
