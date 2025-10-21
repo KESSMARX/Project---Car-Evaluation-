@@ -215,9 +215,9 @@ while menuEdit == 1:
 
                 #Prints the accuracy:
                 print("Accuracy:", accuracy_score(strat_classes_test, predictions))
-                print("Precision:", precision_score(strat_classes_test, predictions))
-                print("Precision:", recall_score(strat_classes_test, predictions))
-
+                print("Precision:", precision_score(strat_classes_test, predictions, average='weighted'))
+                print("Recall:", recall_score(strat_classes_test, predictions, average='weighted'))
+                
                 # Savings results
                 userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
                 if userChoice == 1:
