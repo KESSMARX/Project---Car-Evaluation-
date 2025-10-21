@@ -35,6 +35,7 @@ knn = KNeighborsClassifier(n_neighbors=1)       # Creates a Knn Classifier Objec
 predictions = 0
 features = 0
 classes = 0
+filename = ""
 
 # Function set up
 def loadData():
@@ -212,7 +213,21 @@ while menuEdit == 1:
         case 3:
             # ---------------------------------------------------------------------------------------------
             # 3. EVALUATION
-            pass
+            
+
+
+            # Savings results
+            userChoice = input ("Would you like to save the results?")
+            if userChoice == 1:
+                filename = input("Please type in the name of the document: ")
+                with open(filename, "r") as f:
+                    lines = f.readlines()
+
+                    
+            elif userChoice == 2:
+                print ("You have not saved these results!")
+            else:
+                error()
 
         case 4:
             # ---------------------------------------------------------------------------------------------
