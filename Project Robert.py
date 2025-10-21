@@ -216,11 +216,11 @@ while menuEdit == 1:
             # 3. EVALUATION
             
             # Compute the Mean absolute error (MAE)
-            mae = mean_absolute_error(classes_test, predictions)
+            mae = mean_absolute_error(strat_classes_test, predictions)
             print(f"MAE: {mae:.3f}")
 
             # Compute the Mean Squared Error (MSE)
-            mse = mean_squared_error(classes_test, predictions)
+            mse = mean_squared_error(strat_classes_test, predictions)
             print(f"MSE: {mse:.3f}")
 
             # Compute the Root Mean Squared Error (RMSE)
