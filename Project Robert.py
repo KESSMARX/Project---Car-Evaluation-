@@ -2,7 +2,6 @@ import pandas as pd
 import sys
 from sklearn.model_selection import train_test_split                 # Imports functionality from Scikit Learning
 from sklearn.neighbors import KNeighborsClassifier                   # Imports kNN Classifier Implementation from Scikit Learning
-from sklearn.neighbors import KNeighborsRegressor                    # Imports kNN Regressor Implementation from Scikit Learning
 from sklearn.compose import ColumnTransformer                        # Imports ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder                      # Imports OneHotEncoder
 from sklearn.preprocessing import MinMaxScaler                       # Imports the MinMaxScaler for Normalization
@@ -186,11 +185,18 @@ while menuEdit == 1:
                                 )
 
                                 defNumCat()
+
+                                # Apply preprocessing to the training set:
+                                preprocessed_strat_feat_train = preprocessor.fit_transform(strat_feat_train)
+
+                                # Apply preprocessing to the test set:
+                                preprocessed_strat_feat_test = preprocessor.transform(strat_feat_test)
+
                         
                                 # Trains this Knn Classifier with the training set obtained previously:
-                                knn.fit(strat_feat_train, strat_classes_train)
+                                knn.fit(preprocessed_strat_feat_train, strat_classes_train)
 
-                                predictions = knn.predict(strat_feat_test)
+                                predictions = knn.predict(preprocessed_strat_feat_test)
                             
                                 print ("You have trained this stratified set of data!")  
                                 break
@@ -207,7 +213,6 @@ while menuEdit == 1:
             # ---------------------------------------------------------------------------------------------
             # 3. EVALUATION
             pass
-
 
         case 4:
             # ---------------------------------------------------------------------------------------------
