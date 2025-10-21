@@ -212,8 +212,10 @@ while menuEdit == 1:
                 userChoice = int(input("Would you like to load a file for evaluation? (1)Yes (2)No"))
                 if userChoice == 1:
                     evalfile = input("Type the name of the file: ")
-                    df = pd.read_csv(evalfile)
-
+                    df2 = pd.read_csv(evalfile)
+                    print(df2.head(5))
+                    
+                    
                     #Prints the accuracy:
                     print("Accuracy:", accuracy_score(strat_classes_test, predictions))
                     print("Precision:", precision_score(strat_classes_test, predictions, average='weighted'))
