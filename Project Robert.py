@@ -178,7 +178,7 @@ while menuEdit == 1:
                             case 1:
                                 # Trains this Knn Classifier with the training set obtained previously:
                                 knn.fit(preprocessed_strat_feat_train, strat_classes_train)
-
+                                predictions = knn.predict(preprocessed_strat_feat_test)
                                 modelTrained = 1
 
                                 print ("You have trained this stratified set of data with a KNN classifier!")
@@ -187,7 +187,7 @@ while menuEdit == 1:
                             case 2:
                                 # Trains this Knn Classifier with the training set obtained previously:
                                 dt.fit(preprocessed_strat_feat_train, strat_classes_train)
-                                
+                                predictions = dt.predict(preprocessed_strat_feat_test)
                                 modelTrained = 1
 
                                 print ("You have trained this stratified set of data with an Dessicion Tree classifier!") 
@@ -209,28 +209,22 @@ while menuEdit == 1:
                 if userChoice == 1:
                     evalfile = input("Type the name of the file: ")
                     df2 = pd.read_csv(evalfile)
-                    print(df2.head(5))
                     
-                    
-                    # Creates a dataframe using the drop method, which has two parameters:
-                    # The first parameter tells which labels to remove (Columns Name) or 
-                    # The second parameter tells whether to remove a row index or a column name. 
-                    # axis=1 means we want to remove a column.
-                    features = df2.drop("class",axis=1)
-
-                    # Creates a dataframe from just one column:
-                    classes = df2["class"]
+                    features2 = df2.drop("class",axis=1)
+                    classes2 = df2["class"]
+                    preprocessed_features2 = preprocessor.transform(features2)
+                    predictions2 = dt.predict(preprocessed_features2)
 
                     #Prints the accuracy:
-                    print("Accuracy:", accuracy_score(strat_classes_test, predictions))
-                    print("Precision:", precision_score(strat_classes_test, predictions, average='weighted'))
-                    print("Recall:", recall_score(strat_classes_test, predictions, average='weighted'))
+                    print("Accuracy:", accuracy_score(classes2, predictions2))
+                    print("Precision:", precision_score(classes2, predictions2, average='weighted'))
+                    print("Recall:", recall_score(classes2, predictions2, average='weighted'))
                 
                 elif userChoice == 2:
                     #Prints the accuracy:
                     print("Accuracy:", accuracy_score(strat_classes_test, predictions))
-                    # print("Precision:", precision_score(strat_classes_test, predictions))
-                    # print("Recall:", recall_score(strat_classes_test, predictions))
+                    print("Precision:", precision_score(strat_classes_test, predictions, average='weighted'))
+                    print("Recall:", recall_score(strat_classes_test, predictions, average='weighted'))
                 # Savings results
                 userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
                 if userChoice == 1:
