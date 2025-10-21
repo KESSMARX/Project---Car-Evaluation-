@@ -289,23 +289,13 @@ while menuEdit == 1:
                 persons = input(f"How many persons fit in? ")
                 lug_boot = input(f"What is the size of the luggage boot? ")
                 safety = input(f"How safe is the car? ")
-                self.simuList.append(simu)
+                simuList.append(simu)
                 objectAdd = int(input("Do you like to add another object? (1)yes (2)no"))
 
 
-            
-            
-            
-            # maybe using a class here would be kinda usefull???
+
 
 
         case _:
             error()
             menu()
-
-
-
-
-# ---------------------------------------------------------------------------------------------
-# Code Testing
-# print (train_test_split)

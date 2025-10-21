@@ -14,8 +14,8 @@ Ideally you want to create a menu, which will allow the user to
    
 3. Evaluate and save the performance of the classification model
    The software must enable the user to choose whether or not they want to load a specific file for evaluation. CHECK
-   In case the user does not provide the additional file, it performs the experiments using a suitable data partitioning strategy.
-   After performing the experiments it will report suitable metrics for the user which will allow them to evaluate the performance of the classification model. 
+   In case the user does not provide the additional file, it performs the experiments using a suitable data partitioning strategy. CHECK
+   After performing the experiments it will report suitable metrics for the user which will allow them to evaluate the performance of the classification model. CHECK
    After showing the metrics it will ask the user whether or not they want to save the results to a file. CHECK
    If the user says yes, the software asks for the file name and saves the results information there. CHECK
    
