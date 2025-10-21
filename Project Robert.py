@@ -143,7 +143,7 @@ while menuEdit == 1:
                 print("* Please choose one of the following options:            *")
                 print("*                                                        *")
                 print("*(1) Split the data and train with the lazy learner - KNN*")
-                print("*(2) Split the data and train with Decision Tress        *")
+                print("*(2) Split the data and train with Decision Trees        *")
                 print("**********************************************************")
 
                 # -----------------------------------------------------------------------------------------
