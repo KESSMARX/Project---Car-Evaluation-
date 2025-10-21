@@ -1,12 +1,13 @@
 import pandas as pd
 import sys
 import numpy as np
-from sklearn.model_selection import train_test_split                 # Imports functionality from Scikit Learning
-from sklearn.tree import DecisionTreeClassifier                      # Imports Decision Tree Classifier from Scikit Learning
-from sklearn.neighbors import KNeighborsClassifier                   # Imports kNN Classifier Implementation from Scikit Learning
-from sklearn.compose import ColumnTransformer                        # Imports ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder                      # Imports OneHotEncoder
-from sklearn.metrics import mean_absolute_error, mean_squared_error  # Imports Evaluation Metrics from Scikit Learning
+from sklearn.model_selection import train_test_split                       # Imports functionality from Scikit Learning
+from sklearn.tree import DecisionTreeClassifier                            # Imports Decision Tree Classifier from Scikit Learning
+from sklearn.neighbors import KNeighborsClassifier                         # Imports kNN Classifier Implementation from Scikit Learning
+from sklearn.compose import ColumnTransformer                              # Imports ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder                            # Imports OneHotEncoder
+from sklearn.metrics import accuracy_score, recall_score, precision_score  # Imports Evaluation Metrics from Scikit Learning
+from sklearn.metrics import mean_absolute_error, mean_squared_error        # Imports Evaluation Metrics from Scikit Learning
 from sklearn.tree import DecisionTreeClassifier
 
 
@@ -38,6 +39,7 @@ dt = DecisionTreeClassifier(random_state=77)    # Creates a Decision tree classi
 predictions = 0
 features = 0
 classes = 0
+modelTrained = 0
 filename = ""
 
 # Function set up
@@ -104,18 +106,7 @@ def menu():
 def end():
     print ("\nThanks for your time and have a great day!\n")
     sys.exit()
-
-
-def defNumCat():
-    categorical_features = ["buying", "maint", "doors", "persons", "lug_boot", "safety"] # Define the columns with categorical features
     
-    # Updates the Preprocessor to consider the categorical data columns
-    global preprocessor
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ("cat", OneHotEncoder(), categorical_features)
-        ]
-    )
 
 # While loop
 while menuEdit == 1:
@@ -151,21 +142,33 @@ while menuEdit == 1:
                 print("*                                                        *")
                 print("* Please choose one of the following options:            *")
                 print("*                                                        *")
-                print("*(1) Split the data and train with KNN                   *")
-                print("*(2) Split the data and train with DT                    *")
+                print("*(1) Split the data and train with the lazy learner - KNN*")
+                print("*(2) Split the data and train with Decision Tress        *")
                 print("**********************************************************")
+
+                # -----------------------------------------------------------------------------------------
                 # Split the data into STRATIFIED train/test sets:
                 strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
-                features, classes, test_size=0.4, random_state=10, stratify=classes
+                features, classes, test_size=0.2, random_state=10, stratify=classes
                 )
 
-                defNumCat()
+                # Define the columns with categorical features
+                categorical_features = ["buying", "maint", "doors", "persons", "lug_boot", "safety"] 
+                
+                # Updates the Preprocessor to consider the categorical data columns
+                preprocessor = ColumnTransformer(
+                    transformers=[
+                        ("cat", OneHotEncoder(), categorical_features)
+                    ]
+                )
 
                 # Apply preprocessing to the training set:
                 preprocessed_strat_feat_train = preprocessor.fit_transform(strat_feat_train)
 
                 # Apply preprocessing to the test set:
                 preprocessed_strat_feat_test = preprocessor.transform(strat_feat_test)
+
+                # -----------------------------------------------------------------------------------------
 
 
                 for i in range(attemps): # Able to run into an error x attemps until you have the possibility to exit this action
@@ -178,8 +181,9 @@ while menuEdit == 1:
 
                                 predictions = dt.predict(preprocessed_strat_feat_test)
 
-                                print ("You have trained this set of data!")
-                                print(predictions)
+                                modelTrained = 1
+
+                                print ("You have trained this stratified set of data with a KNN classifier!")
                                 break
 
                             case 2:
@@ -187,9 +191,10 @@ while menuEdit == 1:
                                 knn.fit(preprocessed_strat_feat_train, strat_classes_train)
 
                                 predictions = knn.predict(preprocessed_strat_feat_test)
-                            
-                                print ("You have trained this stratified set of data!") 
-                                print(predictions) 
+
+                                modelTrained = 1
+
+                                print ("You have trained this stratified set of data with an Dessicion Tree classifier!") 
                                 break
 
                             case _: 
@@ -203,39 +208,42 @@ while menuEdit == 1:
         case 3:
             # ---------------------------------------------------------------------------------------------
             # 3. EVALUATION
-            userChoice = int(input("Would you like to load a file for evaluation? (1)Yes (2)No"))
-            if userChoice == 1:
-                evalfile = input("Type the name for the file: ")
-                
-            # Compute the Mean absolute error (MAE)
-            mae = mean_absolute_error(strat_classes_test, predictions)
-            print(f"MAE: {mae:.3f}")
+            if modelTrained == 1:
+                userChoice = int(input("Would you like to load a file for evaluation? (1)Yes (2)No"))
+                if userChoice == 1:
+                    evalfile = input("Type the name of the file: ")
 
-            # Compute the Mean Squared Error (MSE)
-            mse = mean_squared_error(strat_classes_test, predictions)
-            print(f"MSE: {mse:.3f}")
+                #Prints the accuracy:
+                print("Accuracy:", accuracy_score(strat_classes_test, predictions))
+                print("Precision:", precision_score(strat_classes_test, predictions))
+                print("Precision:", recall_score(strat_classes_test, predictions))
 
-            # Compute the Root Mean Squared Error (RMSE)
-            rmse = np.sqrt(mse)
-            print(f"RMSE: {rmse:.3f}")
+                # Savings results
+                userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
+                if userChoice == 1:
+                    filename = input("Please type in the name of the document: ")
+                    with open(filename, "w") as f:
+                        f.write(f"{filename}\n")
+                        f.write(f"Accuracy: {accuracy_score}")
+                        f.write(f"Precision: {precision_score}")
+                        f.write(f"Recall: {recall_score}")
+                        f.write(f"Predictions:\n{predictions}")
 
-            # Savings results
-            userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
-            if userChoice == 1:
-                filename = input("Please type in the name of the document: ")
-                with open(filename, "r") as f:
-                    lines = f.readlines()
-
-
-            elif userChoice == 2:
-                print ("You have not saved these results!")
+                elif userChoice == 2:
+                    print ("You have not saved these results!")
+                else:
+                    error()
             else:
-                error()
+                print("You have not trained any models yet!")
+                menu()
 
         case 4:
             # ---------------------------------------------------------------------------------------------
             # 4. SIMULATION
-            pass
+            print("Please enter the values for an object you would to simulate.")
+            
+            # maybe using a class here would be kinda usefull???
+
 
         case _:
             error()
