@@ -7,9 +7,6 @@ from sklearn.neighbors import KNeighborsClassifier                         # Imp
 from sklearn.compose import ColumnTransformer                              # Imports ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder                            # Imports OneHotEncoder
 from sklearn.metrics import accuracy_score, recall_score, precision_score  # Imports Evaluation Metrics from Scikit Learning
-from sklearn.metrics import mean_absolute_error, mean_squared_error        # Imports Evaluation Metrics from Scikit Learning
-from sklearn.tree import DecisionTreeClassifier
-
 
 # ---------------------------------------------------------------------------------------------
 
@@ -208,7 +205,18 @@ while menuEdit == 1:
             # ---------------------------------------------------------------------------------------------
             # 3. EVALUATION
             if modelTrained == 1:
-                userChoice = int(input("Would you like to load a file for evaluation? (1)Yes (2)No"))
+                
+                print("**********************************************************")
+                print("*********************** Evaluation ***********************")
+                print("*                                                        *")
+                print("* Please choose one of the following options:            *")
+                print("*                                                        *")
+                print("*(1) Load a file for evaluating the trained data.        *")
+                print("*(2) Do not load a file and work with another strategy.  *")
+                print("**********************************************************")
+
+
+                userChoice = int(input("Please type in the number of the choosen evaluation: "))
                 if userChoice == 1:
                     evalfile = input("Type the name of the file: ")
                     df2 = pd.read_csv(evalfile)
@@ -235,6 +243,8 @@ while menuEdit == 1:
                     print("Accuracy:", accuracy_score(strat_classes_test, predictions))
                     print("Precision:", precision_score(strat_classes_test, predictions, average='weighted'))
                     print("Recall:", recall_score(strat_classes_test, predictions, average='weighted'))
+                
+                
                 # Savings results
                 userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
                 if userChoice == 1:
@@ -245,19 +255,31 @@ while menuEdit == 1:
                         f.write(f"Precision: {precision_score}")
                         f.write(f"Recall: {recall_score}")
                         f.write(f"Predictions:\n{predictions}")
+                    print ("You have successfully saved these results!")
 
                 elif userChoice == 2:
-                    print ("You have not saved these results!")
+                    print ("You have not saved these results!")   
                 else:
-                    error()
+                    error()  
             else:
                 print("You have not trained any models yet!")
-                menu()
+            menu()
 
         case 4:
             # ---------------------------------------------------------------------------------------------
             # 4. SIMULATION
-            print("Please enter the values for an object you would to simulate.")
+            class simu():
+
+                def __init__(self, buying, maint, doors, persons, lug_boot, safety):
+                    self.buying = buying
+                    self.maint = maint
+                    self.doors = doors
+                    self.persons = persons
+                    self.lug_boot = lug_boot
+                    self.safety = safety
+
+            print("Please enter the values for an object you would like to simulate.")
+            
             
             # maybe using a class here would be kinda usefull???
 
