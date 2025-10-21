@@ -39,6 +39,7 @@ features = 0
 classes = 0
 modelTrained = 0
 filename = ""
+objectAdd = 1
 
 # Function set up
 def loadData():
@@ -278,7 +279,20 @@ while menuEdit == 1:
                     self.lug_boot = lug_boot
                     self.safety = safety
 
-            print("Please enter the values for an object you would like to simulate.")
+            simuList = []
+
+            while objectAdd == 1:
+                print("Please enter the values for an object you would like to simulate.")
+                buying = input(f"How is the buying? ")
+                maint = input(f"How is the maintenance? ")
+                doors = input(f"How many doors are existing? ")
+                persons = input(f"How many persons fit in? ")
+                lug_boot = input(f"What is the size of the luggage boot? ")
+                safety = input(f"How safe is the car? ")
+                self.simuList.append(simu)
+
+
+            
             
             
             # maybe using a class here would be kinda usefull???
