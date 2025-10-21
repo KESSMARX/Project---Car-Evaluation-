@@ -9,7 +9,7 @@ Ideally you want to create a menu, which will allow the user to
    ● Some basic statistics CHECK
    
 2. Train a classification model with the current version of the dataset
-   The software must allow the user to select between at least 2 types of supervised machine learning algorithms to train the models. IN PROGRESS
+   The software must allow the user to select between at least 2 types of supervised machine learning algorithms to train the models. CHECK
    If no dataset was loaded, the software must ask the user to load a dataset first. CHECK
    
 3. Evaluate and save the performance of the classification model

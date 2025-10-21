@@ -1,10 +1,11 @@
 import pandas as pd
 import sys
+import numpy as np
 from sklearn.model_selection import train_test_split                 # Imports functionality from Scikit Learning
+from sklearn.tree import DecisionTreeClassifier                      # Imports Decision Tree Classifier from Scikit Learning
 from sklearn.neighbors import KNeighborsClassifier                   # Imports kNN Classifier Implementation from Scikit Learning
 from sklearn.compose import ColumnTransformer                        # Imports ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder                      # Imports OneHotEncoder
-from sklearn.preprocessing import MinMaxScaler                       # Imports the MinMaxScaler for Normalization
 from sklearn.metrics import mean_absolute_error, mean_squared_error  # Imports Evaluation Metrics from Scikit Learning
 from sklearn.tree import DecisionTreeClassifier
 
@@ -206,6 +207,17 @@ while menuEdit == 1:
             if userChoice == 1:
                 evalfile = input("Type the name for the file: ")
                 
+            # Compute the Mean absolute error (MAE)
+            mae = mean_absolute_error(strat_classes_test, predictions)
+            print(f"MAE: {mae:.3f}")
+
+            # Compute the Mean Squared Error (MSE)
+            mse = mean_squared_error(strat_classes_test, predictions)
+            print(f"MSE: {mse:.3f}")
+
+            # Compute the Root Mean Squared Error (RMSE)
+            rmse = np.sqrt(mse)
+            print(f"RMSE: {rmse:.3f}")
 
             # Savings results
             userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
@@ -214,7 +226,7 @@ while menuEdit == 1:
                 with open(filename, "r") as f:
                     lines = f.readlines()
 
-                    
+
             elif userChoice == 2:
                 print ("You have not saved these results!")
             else:
