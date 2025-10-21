@@ -177,9 +177,7 @@ while menuEdit == 1:
                         match userChoice:
                             case 1:
                                 # Trains this Knn Classifier with the training set obtained previously:
-                                dt.fit(preprocessed_strat_feat_train, strat_classes_train)
-
-                                predictions = knn.predict(preprocessed_strat_feat_test)
+                                knn.fit(preprocessed_strat_feat_train, strat_classes_train)
 
                                 modelTrained = 1
 
@@ -188,10 +186,8 @@ while menuEdit == 1:
 
                             case 2:
                                 # Trains this Knn Classifier with the training set obtained previously:
-                                knn.fit(preprocessed_strat_feat_train, strat_classes_train)
-
-                                predictions = dt.predict(preprocessed_strat_feat_test)
-
+                                dt.fit(preprocessed_strat_feat_train, strat_classes_train)
+                                
                                 modelTrained = 1
 
                                 print ("You have trained this stratified set of data with an Dessicion Tree classifier!") 
@@ -216,6 +212,15 @@ while menuEdit == 1:
                     print(df2.head(5))
                     
                     
+                    # Creates a dataframe using the drop method, which has two parameters:
+                    # The first parameter tells which labels to remove (Columns Name) or 
+                    # The second parameter tells whether to remove a row index or a column name. 
+                    # axis=1 means we want to remove a column.
+                    features = df2.drop("class",axis=1)
+
+                    # Creates a dataframe from just one column:
+                    classes = df2["class"]
+
                     #Prints the accuracy:
                     print("Accuracy:", accuracy_score(strat_classes_test, predictions))
                     print("Precision:", precision_score(strat_classes_test, predictions, average='weighted'))
