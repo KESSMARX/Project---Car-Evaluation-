@@ -13,11 +13,11 @@ Ideally you want to create a menu, which will allow the user to
    If no dataset was loaded, the software must ask the user to load a dataset first. CHECK
    
 3. Evaluate and save the performance of the classification model
-   The software must enable the user to choose whether or not they want to load a specific file for evaluation.
+   The software must enable the user to choose whether or not they want to load a specific file for evaluation. CHECK
    In case the user does not provide the additional file, it performs the experiments using a suitable data partitioning strategy.
-   After performing the experiments it will report suitable metrics for the user which will allow them to evaluate the performance of the classification model.
-   After showing the metrics it will ask the user whether or not they want to save the results to a file.
-   If the user says yes, the software asks for the file name and saves the results information there.
+   After performing the experiments it will report suitable metrics for the user which will allow them to evaluate the performance of the classification model. 
+   After showing the metrics it will ask the user whether or not they want to save the results to a file. CHECK
+   If the user says yes, the software asks for the file name and saves the results information there. CHECK
    
 5. Simulate a real environment
    Simulate a real environment where the user can input a new unseen example without the class information and the system will return the result from using the classification model.

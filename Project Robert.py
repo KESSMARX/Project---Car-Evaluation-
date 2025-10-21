@@ -179,7 +179,7 @@ while menuEdit == 1:
                                 # Trains this Knn Classifier with the training set obtained previously:
                                 dt.fit(preprocessed_strat_feat_train, strat_classes_train)
 
-                                predictions = dt.predict(preprocessed_strat_feat_test)
+                                predictions = knn.predict(preprocessed_strat_feat_test)
 
                                 modelTrained = 1
 
@@ -190,7 +190,7 @@ while menuEdit == 1:
                                 # Trains this Knn Classifier with the training set obtained previously:
                                 knn.fit(preprocessed_strat_feat_train, strat_classes_train)
 
-                                predictions = knn.predict(preprocessed_strat_feat_test)
+                                predictions = dt.predict(preprocessed_strat_feat_test)
 
                                 modelTrained = 1
 
@@ -212,11 +212,13 @@ while menuEdit == 1:
                 userChoice = int(input("Would you like to load a file for evaluation? (1)Yes (2)No"))
                 if userChoice == 1:
                     evalfile = input("Type the name of the file: ")
+                    df = pd.read_csv(evalfile)
 
-                #Prints the accuracy:
-                print("Accuracy:", accuracy_score(strat_classes_test, predictions))
-                print("Precision:", precision_score(strat_classes_test, predictions))
-                print("Precision:", recall_score(strat_classes_test, predictions))
+                elif userChoice == 2:
+                    #Prints the accuracy:
+                    print("Accuracy:", accuracy_score(strat_classes_test, predictions))
+                    # print("Precision:", precision_score(strat_classes_test, predictions))
+                    # print("Recall:", recall_score(strat_classes_test, predictions))
 
                 # Savings results
                 userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
