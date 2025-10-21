@@ -290,6 +290,7 @@ while menuEdit == 1:
                 lug_boot = input(f"What is the size of the luggage boot? ")
                 safety = input(f"How safe is the car? ")
                 self.simuList.append(simu)
+                objectAdd = int(input("Do you like to add another object? (1)yes (2)no"))
 
 
             
