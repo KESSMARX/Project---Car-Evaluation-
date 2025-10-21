@@ -205,14 +205,13 @@ while menuEdit == 1:
             # ---------------------------------------------------------------------------------------------
             # 3. EVALUATION
             if modelTrained == 1:
-                userChoice = int(input("Would you like to load a file for evaluation? (1)Yes (2)No"))
+                userChoice = int(input("Would you like to load a file for evaluation? (1)Yes (2)No: "))
                 if userChoice == 1:
                     evalfile = input("Type the name of the file: ")
-                    df2 = pd.read_csv(evalfile)
-                    
+                    df2 = pd.read_csv(evalfile) 
                     features2 = df2.drop("class",axis=1)
                     classes2 = df2["class"]
-                    preprocessed_features2 = preprocessor.transform(features2)
+                    preprocessed_features2 = preprocessor.fit.transform(features2)
                     predictions2 = dt.predict(preprocessed_features2)
 
                     #Prints the accuracy:
@@ -226,7 +225,7 @@ while menuEdit == 1:
                     print("Precision:", precision_score(strat_classes_test, predictions, average='weighted'))
                     print("Recall:", recall_score(strat_classes_test, predictions, average='weighted'))
                 # Savings results
-                userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
+                userChoice = int(input("Would you like to save the results? (1)Yes (2)No: "))
                 if userChoice == 1:
                     filename = input("Please type in the name of the document: ")
                     with open(filename, "w") as f:
