@@ -6,6 +6,7 @@ from sklearn.compose import ColumnTransformer                        # Imports C
 from sklearn.preprocessing import OneHotEncoder                      # Imports OneHotEncoder
 from sklearn.preprocessing import MinMaxScaler                       # Imports the MinMaxScaler for Normalization
 from sklearn.metrics import mean_absolute_error, mean_squared_error  # Imports Evaluation Metrics from Scikit Learning
+from sklearn.tree import DecisionTreeClassifier
 
 
 # ---------------------------------------------------------------------------------------------
@@ -32,6 +33,7 @@ attemps = 3                                     # Attemps until the code asks if
 userattempt = 1                                 # Attemp set to check
 preprocessor = 0
 knn = KNeighborsClassifier(n_neighbors=1)       # Creates a Knn Classifier Object with k=1
+dt = DecisionTreeClassifier(random_state=77)    # Creates a Decision tree classifier object
 predictions = 0
 features = 0
 classes = 0
@@ -148,9 +150,21 @@ while menuEdit == 1:
                 print("*                                                        *")
                 print("* Please choose one of the following options:            *")
                 print("*                                                        *")
-                print("*(1) Split the data into train sets.                     *")
-                print("*(2) Split the data into stratified train sets.          *")
+                print("*(1) Split the data and train with KNN                   *")
+                print("*(2) Split the data and train with DT                    *")
                 print("**********************************************************")
+                # Split the data into STRATIFIED train/test sets:
+                strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
+                features, classes, test_size=0.4, random_state=10, stratify=classes
+                )
+
+                defNumCat()
+
+                # Apply preprocessing to the training set:
+                preprocessed_strat_feat_train = preprocessor.fit_transform(strat_feat_train)
+
+                # Apply preprocessing to the test set:
+                preprocessed_strat_feat_test = preprocessor.transform(strat_feat_test)
 
 
                 for i in range(attemps): # Able to run into an error x attemps until you have the possibility to exit this action
@@ -158,48 +172,23 @@ while menuEdit == 1:
                         userChoice = int(input("\nPlease type in the number of the choosen algorithm: "))
                         match userChoice:
                             case 1:
-                                # Split the data into train/test sets
-                                features_train, features_test, classes_train, classes_test = train_test_split(
-                                features, classes, test_size=0.2, random_state=10
-                                )
-
-                                defNumCat()
-                        
-                                # Apply preprocessing to the training set:
-                                preprocessed_features_train = preprocessor.fit_transform(features_train)
-
-                                # Apply preprocessing to the test set:
-                                preprocessed_features_test = preprocessor.transform(features_test)
-
                                 # Trains this Knn Classifier with the training set obtained previously:
-                                knn.fit(preprocessed_features_train, classes_train)
+                                dt.fit(preprocessed_strat_feat_train, strat_classes_train)
 
-                                predictions = knn.predict(preprocessed_features_test)
+                                predictions = dt.predict(preprocessed_strat_feat_test)
 
                                 print ("You have trained this set of data!")
+                                print(predictions)
                                 break
 
                             case 2:
-                                # Split the data into STRATIFIED train/test sets:
-                                strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
-                                features, classes, test_size=0.4, random_state=10, stratify=classes
-                                )
-
-                                defNumCat()
-
-                                # Apply preprocessing to the training set:
-                                preprocessed_strat_feat_train = preprocessor.fit_transform(strat_feat_train)
-
-                                # Apply preprocessing to the test set:
-                                preprocessed_strat_feat_test = preprocessor.transform(strat_feat_test)
-
-                        
                                 # Trains this Knn Classifier with the training set obtained previously:
                                 knn.fit(preprocessed_strat_feat_train, strat_classes_train)
 
                                 predictions = knn.predict(preprocessed_strat_feat_test)
                             
-                                print ("You have trained this stratified set of data!")  
+                                print ("You have trained this stratified set of data!") 
+                                print(predictions) 
                                 break
 
                             case _: 
@@ -213,11 +202,13 @@ while menuEdit == 1:
         case 3:
             # ---------------------------------------------------------------------------------------------
             # 3. EVALUATION
-            
-
+            userChoice = int(input("Would you like to load a file for evaluation? (1)Yes (2)No"))
+            if userChoice == 1:
+                evalfile = input("Type the name for the file: ")
+                
 
             # Savings results
-            userChoice = input ("Would you like to save the results?")
+            userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
             if userChoice == 1:
                 filename = input("Please type in the name of the document: ")
                 with open(filename, "r") as f:
