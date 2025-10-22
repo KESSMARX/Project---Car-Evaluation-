@@ -28,4 +28,4 @@ Ideally you want to create a menu, which will allow the user to
 
 TO DO
 - create a menu to load, train, evaluate and simulate a dataset CHECK
-- 
+- Improvement of the code --> setting up a variable to give the user the choice to choose of how much percentage he wants to train the datas on (80 - 20 %)
