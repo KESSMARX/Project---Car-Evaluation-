@@ -269,7 +269,7 @@ while menuEdit == 1:
         case 4:
             # ---------------------------------------------------------------------------------------------
             # 4. SIMULATION
-            class simu():
+            class Simu():
 
                 def __init__(self, buying, maint, doors, persons, lug_boot, safety):
                     self.buying = buying
@@ -278,7 +278,11 @@ while menuEdit == 1:
                     self.persons = persons
                     self.lug_boot = lug_boot
                     self.safety = safety
+                
+                def __str__(self):
+                    return f"{self.buying}, {self.maint}, {self.doors}, {self.persons}, {self.lug_boot}, {self.safety}"
 
+                    
             simuList = []
 
             while objectAdd == 1:
@@ -289,10 +293,11 @@ while menuEdit == 1:
                 persons = input(f"How many persons fit in? ")
                 lug_boot = input(f"What is the size of the luggage boot? ")
                 safety = input(f"How safe is the car? ")
-                simuList.append(simu)
+                obj_simu = Simu(buying, maint, doors, persons, lug_boot, safety)
+                simuList.append(obj_simu)
                 objectAdd = int(input("Do you like to add another object? (1)yes (2)no"))
-
-
+            for i in simuList:
+                print(i.__str__())
 
 
 
