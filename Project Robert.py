@@ -22,6 +22,7 @@ print("*(1) Load a data set.                                    *")
 print("*(2) Train the data set.                                 *")
 print("*(3) Evaluation of the data set.                         *")
 print("*(4) Simulation of the data set.                         *")
+print("*(5) Exit the menu.                                      *")
 print("**********************************************************")
 
 # Variables set up
@@ -88,7 +89,7 @@ def menu():
     global userattempt, menuEdit
     while userattempt == 1:
         try:
-            menuEdit = int(input("\n(1) continue or (2) cancel "))
+            menuEdit = int(input("\n(1) continue or (2) exit "))
             if 1<= menuEdit <= 2: # Approval of integer (1 or 2)
                 break   
             else:
@@ -112,7 +113,7 @@ while menuEdit == 1:
     while userattempt == 1:
         try:
             userChoice = int(input("\nPlease type in the number of the choosen operation: "))
-            if 1<= userChoice <=4:
+            if 1<= userChoice <=5:
                 break       
             else:
                 raise
@@ -295,6 +296,7 @@ while menuEdit == 1:
 
                 simuList = []
 
+                objectAdd = 1
                 while objectAdd == 1:
                     while objectAdd == 1:
                         buying = input(f"How is the buying?(vhigh, high, med, low): ")
@@ -347,6 +349,8 @@ while menuEdit == 1:
 
 
 
+        case 5:
+            end()
 
         case _:
             error()
