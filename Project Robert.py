@@ -298,15 +298,18 @@ while menuEdit == 1:
 
             while objectAdd == 1:
                 print("Please enter the values for an object you would like to simulate.")
-                buying = input(f"How is the buying? ")
-                maint = input(f"How is the maintenance? ")
-                doors = input(f"How many doors are existing? ")
-                persons = input(f"How many persons fit in? ")
-                lug_boot = input(f"What is the size of the luggage boot? ")
-                safety = input(f"How safe is the car? ")
+                while objectAdd = 1:
+                buying = input(f"How is the buying?(vhigh, high, med, low): ")
+                    if buying != "vhigh" or "high" or "med" or "low":
+                    
+                maint = input(f"How is the maintenance?(vhigh, high, med, low): ")
+                doors = input(f"How many doors are existing?(2, 3, 4, 5more): ")
+                persons = input(f"How many persons fit in?(2, 4, more): ")
+                lug_boot = input(f"What is the size of the luggage boot?(small, med, big): ")
+                safety = input(f"How safe is the car?(low, med, high.): ")
                 object = simu(buying, maint, doors, persons, lug_boot, safety)
                 simuList.append(object)
-                objectAdd = int(input("Do you like to add another object? (1)yes (2)no"))
+                objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
 
             for j in simuList:
                 print(j.string())  
