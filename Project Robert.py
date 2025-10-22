@@ -339,7 +339,7 @@ while menuEdit == 1:
                 objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
 
             for j in simuList:
-                print(j.string())  
+                print(j.printObj())  
 
 
 
