@@ -288,7 +288,7 @@ while menuEdit == 1:
                     self.lug_boot = lug_boot
                     self.safety = safety
                 
-                def __str__(self):
+                def string(self):
                     return f"{self.buying}, {self.maint}, {self.doors}, {self.persons}, {self.lug_boot}, {self.safety}"
 
                 def printObj(self):
@@ -298,15 +298,42 @@ while menuEdit == 1:
 
             while objectAdd == 1:
                 print("Please enter the values for an object you would like to simulate.")
-                while objectAdd = 1:
-                buying = input(f"How is the buying?(vhigh, high, med, low): ")
-                    if buying != "vhigh" or "high" or "med" or "low":
-                    
-                maint = input(f"How is the maintenance?(vhigh, high, med, low): ")
-                doors = input(f"How many doors are existing?(2, 3, 4, 5more): ")
-                persons = input(f"How many persons fit in?(2, 4, more): ")
-                lug_boot = input(f"What is the size of the luggage boot?(small, med, big): ")
-                safety = input(f"How safe is the car?(low, med, high.): ")
+                while objectAdd == 1:
+                    buying = input(f"How is the buying?(vhigh, high, med, low): ")
+                    if buying in ["vhigh", "high", "med", "low"]:
+                        break
+                    else:
+                        error()
+                while objectAdd == 1:
+                    maint = input(f"How is the maintenance?(vhigh, high, med, low): ")
+                    if maint in ["vhigh", "high", "med", "low"]:
+                        break
+                    else:
+                        error()
+                while objectAdd == 1:
+                    doors = input(f"How many doors are existing?(2, 3, 4, 5more): ")
+                    if doors in ["2", "3", "4", "5more"]:
+                        break
+                    else:
+                        error()
+                while objectAdd == 1:
+                    persons = input(f"How many persons fit in?(2, 4, more): ")
+                    if persons in ["2", "4", "more"]:
+                        break
+                    else:
+                        error()
+                while objectAdd == 1:
+                    lug_boot = input(f"What is the size of the luggage boot?(small, med, big): ")
+                    if lug_boot in ["small", "med", "big"]:
+                        break
+                    else:
+                        error()
+                while objectAdd == 1:
+                    safety = input(f"How safe is the car?(low, med, high.): ")
+                    if safety in ["low", "med", "high"]:
+                        break
+                    else:
+                        error()
                 object = simu(buying, maint, doors, persons, lug_boot, safety)
                 simuList.append(object)
                 objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
