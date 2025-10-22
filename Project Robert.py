@@ -287,6 +287,9 @@ while menuEdit == 1:
                     self.persons = persons
                     self.lug_boot = lug_boot
                     self.safety = safety
+                
+                def __str__(self):
+                    return f"{self.buying}, {self.maint}, {self.doors}, {self.persons}, {self.lug_boot}, {self.safety}"
 
                 def printObj(self):
                        return(self.buying, self.maint, self.doors, self.persons, self.lug_boot)
