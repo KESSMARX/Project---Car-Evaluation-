@@ -357,9 +357,9 @@ while menuEdit == 1:
                             break
                         else:
                             error()
-                object = simu(buying, maint, doors, persons, lug_boot, safety)
-                simuList.append(object)
-                objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
+                    object = simu(buying, maint, doors, persons, lug_boot, safety)
+                    simuList.append(object)
+                    objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
 
                 print("The following objects have been submitted to the list:")
                 for j in simuList:
@@ -367,19 +367,15 @@ while menuEdit == 1:
                 print("The predicted class for each object is:")
 
                 dfsimuList = pd.DataFrame([vars(obj) for obj in simuList])
-                print(dfsimuList.columns.tolist())
                 categorical_features = ["buying", "maint", "doors", "persons", "lug_boot", "safety"] 
-                
-                # Updates the Preprocessor to consider the categorical data columns
-                preprocessor2 = ColumnTransformer(
-                    transformers=[
-                        ("cat", OneHotEncoder(), categorical_features)
-                    ]
-                )
 
                 # Apply preprocessing to the training set:
-                preprocessed_df_simuList = preprocessor2.fit_transform(dfsimuList)
-                predictions3 = knn.predict(preprocessed_df_simuList)
+                preprocessed_df_simuList = preprocessor.transform(dfsimuList)
+                try:
+                    predictions3 = dt.predict(preprocessed_df_simuList)
+                except:
+                    predictions3 = knn.predict(preprocessed_df_simuList)
+                print(predictions3)
             else:
                 print("The model has not been trained so far!")
                 print("Please make sure you loaded and trained a data set")
