@@ -328,8 +328,8 @@ while menuEdit == 1:
 
                 simuList = []
 
-                objectAdd = 1
                 while objectAdd == 1:
+                    print("Please enter the values for an object you would like to simulate.")
                     while objectAdd == 1:
                         buying = input(f"How is the buying?(vhigh, high, med, low): ")
                         if buying in ["vhigh", "high", "med", "low"]:
@@ -366,20 +366,35 @@ while menuEdit == 1:
                             break
                         else:
                             error()
-                    object = simu(buying, maint, doors, persons, lug_boot, safety)
-                    simuList.append(object)
-                    objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
-                
+                object = simu(buying, maint, doors, persons, lug_boot, safety)
+                simuList.append(object)
+                objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
+
                 print("The following objects have been submitted to the list:")
                 for j in simuList:
                     print(j.printObj())  
                 print("The predicted class for each object is:")
 
+                dfsimuList = pd.DataFrame([vars(obj) for obj in simuList])
+                print(dfsimuList.columns.tolist())
+                categorical_features = ["buying", "maint", "doors", "persons", "lug_boot", "safety"] 
+                
+                # Updates the Preprocessor to consider the categorical data columns
+                preprocessor2 = ColumnTransformer(
+                    transformers=[
+                        ("cat", OneHotEncoder(), categorical_features)
+                    ]
+                )
+
+                # Apply preprocessing to the training set:
+                preprocessed_df_simuList = preprocessor2.fit_transform(dfsimuList)
+                predictions3 = knn.predict(preprocessed_df_simuList)
             else:
                 print("The model has not been trained so far!")
                 print("Please make sure you loaded and trained a data set")
                 menu()
 
+            
 
         case 5:
             end()
