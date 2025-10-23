@@ -31,6 +31,7 @@ menuEdit = 1
 successLoad = 0  
 attemps = 3                                     # Attemps until the code asks if you want to exit
 userattempt = 1                                 # Attemp set to check
+testPerc = None
 preprocessor = 0
 algoChoice = 0
 knn = KNeighborsClassifier(n_neighbors=1)       # Creates a Knn Classifier Object with k=1
@@ -147,9 +148,31 @@ while menuEdit == 1:
                 print("**********************************************************")
 
                 # -----------------------------------------------------------------------------------------
+                # Ask the user of the test/train percentage set up
+                print("To set up the test/train set you have to decide about the mixture, e.g. 20/80 or 50/50")
+                
+  
+                for i in range(attemps):
+                    try:
+                        testPerc = int(input("Please type in the percentage of the testing data set: "))/100
+                        if 0 <= testPerc <= 1:
+                            break
+                        else:
+                            testPerc = None
+                            raise
+                    except:
+                        error()
+
+                if testPerc is None:
+                    testPerc = 0.2
+                    print("\nYou have typed in the wrong input multiple times.")
+                    print(f"We will be setting the value to {testPerc*100}% for you!")
+
+                    
+
                 # Split the data into STRATIFIED train/test sets:
                 strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
-                features, classes, test_size=0.2, random_state=10, stratify=classes
+                features, classes, test_size=testPerc, random_state=10, stratify=classes
                 )
 
                 # Define the columns with categorical features
@@ -341,12 +364,12 @@ while menuEdit == 1:
                 print("The following objects have been submitted to the list:")
                 for j in simuList:
                     print(j.printObj())  
+                print("The predicted class for each object is:")
 
             else:
                 print("The model has not been trained so far!")
                 print("Please make sure you loaded and trained a data set")
                 menu()
-
 
 
         case 5:
