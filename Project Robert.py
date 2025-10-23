@@ -22,6 +22,7 @@ print("*(1) Load a data set.                                    *")
 print("*(2) Train the data set.                                 *")
 print("*(3) Evaluation of the data set.                         *")
 print("*(4) Simulation of the data set.                         *")
+print("*(5) Exit the menu.                                      *")
 print("**********************************************************")
 
 # Variables set up
@@ -30,6 +31,7 @@ menuEdit = 1
 successLoad = 0  
 attemps = 3                                     # Attemps until the code asks if you want to exit
 userattempt = 1                                 # Attemp set to check
+testPerc = None
 preprocessor = 0
 algoChoice = 0
 knn = KNeighborsClassifier(n_neighbors=1)       # Creates a Knn Classifier Object with k=1
@@ -88,7 +90,7 @@ def menu():
     global userattempt, menuEdit
     while userattempt == 1:
         try:
-            menuEdit = int(input("\n(1) continue or (2) cancel "))
+            menuEdit = int(input("\n(1) continue or (2) exit "))
             if 1<= menuEdit <= 2: # Approval of integer (1 or 2)
                 break   
             else:
@@ -112,7 +114,7 @@ while menuEdit == 1:
     while userattempt == 1:
         try:
             userChoice = int(input("\nPlease type in the number of the choosen operation: "))
-            if 1<= userChoice <=4:
+            if 1<= userChoice <=5:
                 break       
             else:
                 raise
@@ -146,9 +148,31 @@ while menuEdit == 1:
                 print("**********************************************************")
 
                 # -----------------------------------------------------------------------------------------
+                # Ask the user of the test/train percentage set up
+                print("To set up the test/train set you have to decide about the mixture, e.g. 20/80 or 50/50")
+                
+  
+                for i in range(attemps):
+                    try:
+                        testPerc = int(input("Please type in the percentage of the testing data set: "))/100
+                        if 0 <= testPerc <= 1:
+                            break
+                        else:
+                            testPerc = None
+                            raise
+                    except:
+                        error()
+
+                if testPerc is None:
+                    testPerc = 0.2
+                    print("\nYou have typed in the wrong input multiple times.")
+                    print(f"We will be setting the value to {testPerc*100}% for you!")
+
+                    
+
                 # Split the data into STRATIFIED train/test sets:
                 strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
-                features, classes, test_size=0.2, random_state=10, stratify=classes
+                features, classes, test_size=testPerc, random_state=10, stratify=classes
                 )
 
                 # Define the columns with categorical features
@@ -268,97 +292,103 @@ while menuEdit == 1:
         case 4:
             # ---------------------------------------------------------------------------------------------
             # 4. SIMULATION
-            print("**********************************************************")
-            print("*********************** Simulation ***********************")
-            print("*                                                        *")
-            print("* Please choose one of the following options:            *")
-            print("*                                                        *")
-            print("*(1) Load a file for evaluating the trained data.        *")
-            print("*(2) Do not load a file and work with another strategy.  *")
-            print("**********************************************************")
+            if modelTrained == 1:
+                print("**********************************************************")
+                print("*********************** Simulation ***********************")
+                print("*                                                        *")
+                print("* Please enter the values for an object you would like   *")
+                print("* to simulate.                                           *")
+                print("**********************************************************")
 
 
-            class simu():
+                class simu():
 
-                def __init__(self, buying, maint, doors, persons, lug_boot, safety):
-                    self.buying = buying
-                    self.maint = maint
-                    self.doors = doors
-                    self.persons = persons
-                    self.lug_boot = lug_boot
-                    self.safety = safety
-                
-                def string(self):
-                    return f"{self.buying}, {self.maint}, {self.doors}, {self.persons}, {self.lug_boot}, {self.safety}"
+                    def __init__(self, buying, maint, doors, persons, lug_boot, safety):
+                        self.buying = buying
+                        self.maint = maint
+                        self.doors = doors
+                        self.persons = persons
+                        self.lug_boot = lug_boot
+                        self.safety = safety
+                    
+                    def string(self):
+                        return f"{self.buying}, {self.maint}, {self.doors}, {self.persons}, {self.lug_boot}, {self.safety}"
 
-                def printObj(self):
-                       return(self.buying, self.maint, self.doors, self.persons, self.lug_boot)
+                    def printObj(self):
+                        return(self.buying, self.maint, self.doors, self.persons, self.lug_boot)
 
-            simuList = []
+                simuList = []
 
-            while objectAdd == 1:
-                print("Please enter the values for an object you would like to simulate.")
                 while objectAdd == 1:
-                    buying = input(f"How is the buying?(vhigh, high, med, low): ")
-                    if buying in ["vhigh", "high", "med", "low"]:
-                        break
-                    else:
-                        error()
-                while objectAdd == 1:
-                    maint = input(f"How is the maintenance?(vhigh, high, med, low): ")
-                    if maint in ["vhigh", "high", "med", "low"]:
-                        break
-                    else:
-                        error()
-                while objectAdd == 1:
-                    doors = input(f"How many doors are existing?(2, 3, 4, 5more): ")
-                    if doors in ["2", "3", "4", "5more"]:
-                        break
-                    else:
-                        error()
-                while objectAdd == 1:
-                    persons = input(f"How many persons fit in?(2, 4, more): ")
-                    if persons in ["2", "4", "more"]:
-                        break
-                    else:
-                        error()
-                while objectAdd == 1:
-                    lug_boot = input(f"What is the size of the luggage boot?(small, med, big): ")
-                    if lug_boot in ["small", "med", "big"]:
-                        break
-                    else:
-                        error()
-                while objectAdd == 1:
-                    safety = input(f"How safe is the car?(low, med, high.): ")
-                    if safety in ["low", "med", "high"]:
-                        break
-                    else:
-                        error()
+                    print("Please enter the values for an object you would like to simulate.")
+                    while objectAdd == 1:
+                        buying = input(f"How is the buying?(vhigh, high, med, low): ")
+                        if buying in ["vhigh", "high", "med", "low"]:
+                            break
+                        else:
+                            error()
+                    while objectAdd == 1:
+                        maint = input(f"How is the maintenance?(vhigh, high, med, low): ")
+                        if maint in ["vhigh", "high", "med", "low"]:
+                            break
+                        else:
+                            error()
+                    while objectAdd == 1:
+                        doors = input(f"How many doors are existing?(2, 3, 4, 5more): ")
+                        if doors in ["2", "3", "4", "5more"]:
+                            break
+                        else:
+                            error()
+                    while objectAdd == 1:
+                        persons = input(f"How many persons fit in?(2, 4, more): ")
+                        if persons in ["2", "4", "more"]:
+                            break
+                        else:
+                            error()
+                    while objectAdd == 1:
+                        lug_boot = input(f"What is the size of the luggage boot?(small, med, big): ")
+                        if lug_boot in ["small", "med", "big"]:
+                            break
+                        else:
+                            error()
+                    while objectAdd == 1:
+                        safety = input(f"How safe is the car?(low, med, high.): ")
+                        if safety in ["low", "med", "high"]:
+                            break
+                        else:
+                            error()
                 object = simu(buying, maint, doors, persons, lug_boot, safety)
                 simuList.append(object)
                 objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
 
-            for j in simuList:
-                print(j.printObj())  
+                print("The following objects have been submitted to the list:")
+                for j in simuList:
+                    print(j.printObj())  
+                print("The predicted class for each object is:")
 
-            dfsimuList = pd.DataFrame([vars(obj) for obj in simuList])
-            print(dfsimuList.columns.tolist())
-            categorical_features = ["buying", "maint", "doors", "persons", "lug_boot", "safety"] 
+                dfsimuList = pd.DataFrame([vars(obj) for obj in simuList])
+                print(dfsimuList.columns.tolist())
+                categorical_features = ["buying", "maint", "doors", "persons", "lug_boot", "safety"] 
+                
+                # Updates the Preprocessor to consider the categorical data columns
+                preprocessor2 = ColumnTransformer(
+                    transformers=[
+                        ("cat", OneHotEncoder(), categorical_features)
+                    ]
+                )
+
+                # Apply preprocessing to the training set:
+                preprocessed_df_simuList = preprocessor2.fit_transform(dfsimuList)
+                predictions3 = knn.predict(preprocessed_df_simuList)
+            else:
+                print("The model has not been trained so far!")
+                print("Please make sure you loaded and trained a data set")
+                menu()
+
             
-            # Updates the Preprocessor to consider the categorical data columns
-            preprocessor2 = ColumnTransformer(
-                transformers=[
-                    ("cat", OneHotEncoder(), categorical_features)
-                ]
-            )
 
-            # Apply preprocessing to the training set:
-            preprocessed_df_simuList = preprocessor2.fit_transform(dfsimuList)
-            predictions3 = knn.predict(preprocessed_df_simuList)
-
-            print(predictions3)
-            
-
+        case 5:
+            end()
 
         case _:
             error()
