@@ -29,7 +29,7 @@ print("**********************************************************")
 userChoice = 0
 menuEdit = 1
 successLoad = 0  
-attemps = 3                                     # Attemps until the code asks if you want to exit
+attempts = 3                                     # Attemps until the code asks if you want to exit
 userattempt = 1                                 # Attemp set to check
 testPerc = None
 preprocessor = 0
@@ -81,10 +81,8 @@ def loadData():
             error()
             menu()
 
-
 def error():
     print ("\nERROR - wrong input!")
-
 
 def menu():
     global userattempt, menuEdit
@@ -92,6 +90,20 @@ def menu():
         try:
             menuEdit = int(input("\n(1) continue or (2) exit "))
             if 1<= menuEdit <= 2: # Approval of integer (1 or 2)
+                #Display the menu
+                print("**********************************************************")
+                print("********************* Project Robert *********************")
+                print("**********************************************************")
+                print("********************* Data Analysis **********************")
+                print("*                                                        *")
+                print("* Please choose one of the following options:            *")
+                print("*                                                        *")
+                print("*(1) Load a data set.                                    *")
+                print("*(2) Train the data set.                                 *")
+                print("*(3) Evaluation of the data set.                         *")
+                print("*(4) Simulation of the data set.                         *")
+                print("*(5) Exit the menu.                                      *")
+                print("**********************************************************")
                 break   
             else:
                 raise        
@@ -103,12 +115,10 @@ def menu():
         end()
         pass
         
-
 def end():
     print ("\nThanks for your time and have a great day!\n")
     sys.exit()
     
-
 # While loop
 while menuEdit == 1:
     while userattempt == 1:
@@ -121,14 +131,12 @@ while menuEdit == 1:
         except:
              error()
         
-
     match userChoice:
         case 1:
             # ---------------------------------------------------------------------------------------------
             # 1. LOADING
             loadData()
             menu()
-
 
         case 2:
             # ---------------------------------------------------------------------------------------------
@@ -138,21 +146,11 @@ while menuEdit == 1:
                 loadData()
 
             if successLoad == 1:
-                print("**********************************************************")
-                print("******************* Training Algorithms ******************")
-                print("*                                                        *")
-                print("* Please choose one of the following options:            *")
-                print("*                                                        *")
-                print("*(1) Split the data and train with the lazy learner - KNN*")
-                print("*(2) Split the data and train with Decision Trees        *")
-                print("**********************************************************")
-
-                # -----------------------------------------------------------------------------------------
+                                # -----------------------------------------------------------------------------------------
                 # Ask the user of the test/train percentage set up
-                print("To set up the test/train set you have to decide about the mixture, e.g. 20/80 or 50/50")
-                
-  
-                for i in range(attemps):
+                print("To set up the test/train set you have to decide about the testing file percentage, e.g. 20 or 50")
+        
+                for i in range(attempts):
                     try:
                         testPerc = int(input("Please type in the percentage of the testing data set: "))/100
                         if 0 <= testPerc <= 1:
@@ -168,8 +166,16 @@ while menuEdit == 1:
                     print("\nYou have typed in the wrong input multiple times.")
                     print(f"We will be setting the value to {testPerc*100}% for you!")
 
-                    
+                print("**********************************************************")
+                print("******************* Training Algorithms ******************")
+                print("*                                                        *")
+                print("* Please choose one of the following options:            *")
+                print("*                                                        *")
+                print("*(1) Split the data and train with the lazy learner - KNN*")
+                print("*(2) Split the data and train with Decision Trees        *")
+                print("**********************************************************")
 
+                # -----------------------------------------------------------------------------------------
                 # Split the data into STRATIFIED train/test sets:
                 strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
                 features, classes, test_size=testPerc, random_state=10, stratify=classes
@@ -192,9 +198,7 @@ while menuEdit == 1:
                 preprocessed_strat_feat_test = preprocessor.transform(strat_feat_test)
 
                 # -----------------------------------------------------------------------------------------
-
-
-                for i in range(attemps): # Able to run into an error x attemps until you have the possibility to exit this action
+                for i in range(attempts): # Able to run into an error x attemps until you have the possibility to exit this action
                     try:
                         userChoice = int(input("\nPlease type in the number of the choosen algorithm: "))
                         match userChoice:
@@ -205,6 +209,7 @@ while menuEdit == 1:
                                 modelTrained = 1
 
                                 print ("You have trained this stratified set of data with a KNN classifier!")
+                                menu()
                                 break
 
                             case 2:
@@ -213,7 +218,8 @@ while menuEdit == 1:
                                 algoChoice = 2
                                 modelTrained = 1
 
-                                print ("You have trained this stratified set of data with an Dessicion Tree classifier!") 
+                                print ("You have trained this stratified set of data with an Decision Tree classifier!") 
+                                menu()
                                 break
 
                             case _: 
@@ -236,7 +242,6 @@ while menuEdit == 1:
                 print("*(1) Load a file for evaluating the trained data.        *")
                 print("*(2) Do not load a file and work with another strategy.  *")
                 print("**********************************************************")
-
 
                 userChoice = int(input("Please type in the number of the choosen evaluation: "))
                 match userChoice:
@@ -271,7 +276,6 @@ while menuEdit == 1:
                         
                         else: 
                             error()
-
                         # Prints the metrics
                         print("Accuracy:", accuracy_score(strat_classes_test, predictions))
                         print("Precision:", precision_score(strat_classes_test, predictions, average='weighted'))
@@ -309,9 +313,7 @@ while menuEdit == 1:
                 print("* to simulate.                                           *")
                 print("**********************************************************")
 
-
                 class simu():
-
                     def __init__(self, buying, maint, doors, persons, lug_boot, safety):
                         self.buying = buying
                         self.maint = maint
@@ -385,16 +387,13 @@ while menuEdit == 1:
                 except:
                     predictions3 = knn.predict(preprocessed_df_simuList)
                 print(predictions3)
+                menu()
             else:
                 print("The model has not been trained so far!")
                 print("Please make sure you loaded and trained a data set")
                 menu()
-
-            
-
         case 5:
             end()
-
         case _:
             error()
             menu()
