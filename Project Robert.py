@@ -201,7 +201,6 @@ while menuEdit == 1:
                             case 1:
                                 # Trains this Knn Classifier with the training set obtained previously:
                                 knn.fit(preprocessed_strat_feat_train, strat_classes_train)
-                                predictions = knn.predict(preprocessed_strat_feat_test)
                                 algoChoice = 1
                                 modelTrained = 1
 
@@ -211,7 +210,6 @@ while menuEdit == 1:
                             case 2:
                                 # Trains this Knn Classifier with the training set obtained previously:
                                 dt.fit(preprocessed_strat_feat_train, strat_classes_train)
-                                predictions = dt.predict(preprocessed_strat_feat_test)
                                 algoChoice = 2
                                 modelTrained = 1
 
@@ -241,32 +239,43 @@ while menuEdit == 1:
 
 
                 userChoice = int(input("Please type in the number of the choosen evaluation: "))
-                if userChoice == 1:
-                    evalfile = input("Type the name of the file: ")
-                    df2 = pd.read_csv(evalfile)
-                    
-                    features2 = df2.drop("class",axis=1)
-                    classes2 = df2["class"]
-                    preprocessed_features2 = preprocessor.transform(features2)
-                    if algoChoice == 1:
-                        predictions2 = knn.predict(preprocessed_features2)
+                match userChoice:
 
-                    elif algoChoice == 2:
-                        predictions2 = dt.predict(preprocessed_features2)
-                    
-                    else: 
-                        error()
+                    case 1:
+                        evalfile = input("Type the name of the file: ")
+                        df2 = pd.read_csv(evalfile)
+                        
+                        features2 = df2.drop("class",axis=1)
+                        classes2 = df2["class"]
+                        preprocessed_features2 = preprocessor.transform(features2)
+                        if algoChoice == 1:
+                            predictions2 = knn.predict(preprocessed_features2)
 
-                    #Prints the accuracy:
-                    print("Accuracy:", accuracy_score(classes2, predictions2))
-                    print("Precision:", precision_score(classes2, predictions2, average='weighted'))
-                    print("Recall:", recall_score(classes2, predictions2, average='weighted'))
+                        elif algoChoice == 2:
+                            predictions2 = dt.predict(preprocessed_features2)
+                        
+                        else: 
+                            error()
+
+                        # Prints the metrics
+                        print("Accuracy:", accuracy_score(classes2, predictions2))
+                        print("Precision:", precision_score(classes2, predictions2, average='weighted'))
+                        '''print("Recall:", recall_score(classes2, predictions2, average='weighted'))'''
                 
-                elif userChoice == 2:
-                    #Prints the accuracy:
-                    print("Accuracy:", accuracy_score(strat_classes_test, predictions))
-                    print("Precision:", precision_score(strat_classes_test, predictions, average='weighted'))
-                    print("Recall:", recall_score(strat_classes_test, predictions, average='weighted'))
+                    case 2:
+                        if algoChoice == 1:
+                            predictions = knn.predict(preprocessed_strat_feat_test)
+
+                        elif algoChoice == 2:
+                            predictions = dt.predict(preprocessed_strat_feat_test)
+                        
+                        else: 
+                            error()
+
+                        # Prints the metrics
+                        print("Accuracy:", accuracy_score(strat_classes_test, predictions))
+                        print("Precision:", precision_score(strat_classes_test, predictions, average='weighted'))
+                        '''print("Recall:", recall_score(strat_classes_test, predictions, average='weighted'))'''
                 
                 
                 # Savings results
