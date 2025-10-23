@@ -341,8 +341,23 @@ while menuEdit == 1:
             for j in simuList:
                 print(j.printObj())  
 
+            dfsimuList = pd.DataFrame([vars(obj) for obj in simuList])
+            print(dfsimuList.columns.tolist())
+            categorical_features = ["buying", "maint", "doors", "persons", "lug_boot", "safety"] 
+            
+            # Updates the Preprocessor to consider the categorical data columns
+            preprocessor2 = ColumnTransformer(
+                transformers=[
+                    ("cat", OneHotEncoder(), categorical_features)
+                ]
+            )
 
+            # Apply preprocessing to the training set:
+            preprocessed_df_simuList = preprocessor2.fit_transform(dfsimuList)
+            predictions3 = knn.predict(preprocessed_df_simuList)
 
+            print(predictions3)
+            
 
 
         case _:
