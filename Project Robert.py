@@ -12,7 +12,7 @@ from sklearn.metrics import accuracy_score, recall_score, precision_score  # Imp
 userChoice = 0
 menuEdit = 1
 successLoad = 0  
-attemps = 3                                     # Attemps until the code asks if you want to exit
+attempts = 3                                     # Attemps until the code asks if you want to exit
 userattempt = 1                                 # Attemp set to check
 testPerc = None
 preprocessor = 0
@@ -76,6 +76,7 @@ def menu(): # Function to show the menu
         try:
             menuEdit = int(input("\n(1) continue or (2) exit \n"))
             if 1<= menuEdit <= 2: # Approval of integer (1 or 2)
+                #Display the menu
                 break   
             else:
                 raise        
@@ -123,7 +124,6 @@ while menuEdit == 1:
         except:
              error() # Loads the function to show something went wrong 
         
-
     match userChoice:
         case 1:
             # ---------------------------------------------------------------------------------------------
@@ -131,7 +131,6 @@ while menuEdit == 1:
             # 1. LOADING
             loadData() # Loads the function to load a data set
             menu() # Loads the function to enter the menu
-
 
         case 2:
             # ---------------------------------------------------------------------------------------------
@@ -155,7 +154,7 @@ while menuEdit == 1:
                 # -----------------------------------------------------------------------------------------
                 # Ask the user of the test/train percentage set up          
   
-                for i in range(attemps):
+                for i in range(attempts):
                     try:
                         testPerc = int(input("Please type in the percentage of the testing data set: "))/100
                         if 0 <= testPerc <= 1:
@@ -173,6 +172,7 @@ while menuEdit == 1:
 
                 # -----------------------------------------------------------------------------------------
 
+                # -----------------------------------------------------------------------------------------
                 # Split the data into STRATIFIED train/test sets:
                 strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
                 features, classes, test_size=testPerc, random_state=10, stratify=classes
@@ -196,7 +196,7 @@ while menuEdit == 1:
 
                 # -----------------------------------------------------------------------------------------
 
-                for i in range(attemps): # Able to run into an error x attemps until you have the possibility to exit this action
+                for i in range(attempts): # Able to run into an error x attemps until you have the possibility to exit this action
                     try:
                         userChoice = int(input("\nPlease type in the number of the choosen algorithm now: "))
                         match userChoice:
@@ -325,7 +325,6 @@ while menuEdit == 1:
                 # -----------------------------------------------------------------------------------------
 
                 class simu():
-
                     def __init__(self, buying, maint, doors, persons, lug_boot, safety):
                         self.buying = buying
                         self.maint = maint
@@ -395,19 +394,16 @@ while menuEdit == 1:
                 print("\nThe predicted class for each object is:")
 
                 dfsimuList = pd.DataFrame([vars(obj) for obj in simuList])
-                print(dfsimuList.columns.tolist())
                 categorical_features = ["buying", "maint", "doors", "persons", "lug_boot", "safety"] 
-                
-                # Updates the Preprocessor to consider the categorical data columns
-                preprocessor2 = ColumnTransformer(
-                    transformers=[
-                        ("cat", OneHotEncoder(), categorical_features)
-                    ]
-                )
 
                 # Apply preprocessing to the training set:
-                preprocessed_df_simuList = preprocessor2.fit_transform(dfsimuList)
-                predictions3 = knn.predict(preprocessed_df_simuList)
+                preprocessed_df_simuList = preprocessor.transform(dfsimuList)
+                try:
+                    predictions3 = dt.predict(preprocessed_df_simuList)
+                except:
+                    predictions3 = knn.predict(preprocessed_df_simuList)
+                print(predictions3)
+                menu()
 
                 # -----------------------------------------------------------------------------------------
 
