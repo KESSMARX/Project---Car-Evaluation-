@@ -1,6 +1,5 @@
 import pandas as pd
 import sys
-import numpy as np
 from sklearn.model_selection import train_test_split                       # Imports functionality from Scikit Learning
 from sklearn.tree import DecisionTreeClassifier                            # Imports Decision Tree Classifier from Scikit Learning
 from sklearn.neighbors import KNeighborsClassifier                         # Imports kNN Classifier Implementation from Scikit Learning
@@ -9,22 +8,6 @@ from sklearn.preprocessing import OneHotEncoder                            # Imp
 from sklearn.metrics import accuracy_score, recall_score, precision_score  # Imports Evaluation Metrics from Scikit Learning
 
 # ---------------------------------------------------------------------------------------------
-
-# Display menu
-print("**********************************************************")
-print("********************* Project Robert *********************")
-print("**********************************************************")
-print("********************* Data Analysis **********************")
-print("*                                                        *")
-print("* Please choose one of the following options:            *")
-print("*                                                        *")
-print("*(1) Load a data set.                                    *")
-print("*(2) Train the data set.                                 *")
-print("*(3) Evaluation of the data set.                         *")
-print("*(4) Simulation of the data set.                         *")
-print("*(5) Exit the menu.                                      *")
-print("**********************************************************")
-
 # Variables set up
 userChoice = 0
 menuEdit = 1
@@ -43,14 +26,15 @@ modelTrained = 0
 filename = ""
 objectAdd = 1
 
+# ---------------------------------------------------------------------------------------------
 # Function set up
-def loadData():
+def loadData(): # Function to load a data set
     global userattempt
     while userattempt == 1:
         try:
             url = input("Insert the name for the dataset: ")
             global successLoad # calling the global variable 
-            successLoad = 1    # telling system the load was successfull
+            successLoad = 1    # telling system load was successfull
             df = pd.read_csv(url)
             print("The dataset was loaded sucessfully.\n")
             print("Overview of some important data information and statistics")
@@ -78,59 +62,79 @@ def loadData():
             break
 
         except: 
-            error()
-            menu()
+            error() # Loads the function to show something went wrong 
+            menu() # Loads the function to show the menu
 
 
-def error():
+def error(): # Function to show something went wrong
     print ("\nERROR - wrong input!")
 
 
-def menu():
-    global userattempt, menuEdit
+def menu(): # Function to show the menu
+    global userattempt, menuEdit # calling global variable
     while userattempt == 1:
         try:
-            menuEdit = int(input("\n(1) continue or (2) exit "))
+            menuEdit = int(input("\n(1) continue or (2) exit \n"))
             if 1<= menuEdit <= 2: # Approval of integer (1 or 2)
                 break   
             else:
                 raise        
         
         except: 
-            error()
+            error() # Loads the function to show something went wrong 
     
     if menuEdit == 2: # Approval of integer 2
         end()
         pass
         
 
-def end():
+def end(): # Code end
     print ("\nThanks for your time and have a great day!\n")
-    sys.exit()
+    sys.exit() # Ends code right away
     
 
-# While loop
+# ---------------------------------------------------------------------------------------------
+# Display menu entry
+print("**********************************************************")
+print("********************* Project Robert *********************")
+print("**********************************************************")
+print("********************* Data Analysis **********************")
+print("*                                                        *")
+print("* Please choose one of the following options:            *")
+print("*                                                        *")
+
+# ---------------------------------------------------------------------------------------------
+# Programm start
 while menuEdit == 1:
     while userattempt == 1:
         try:
+            print("**********************************************************")
+            print("*(1) Load a data set.                                    *")
+            print("*(2) Train the data set.                                 *")
+            print("*(3) Evaluation of the data set.                         *")
+            print("*(4) Simulation of the data set.                         *")
+            print("*(5) Exit the menu.                                      *")
+            print("**********************************************************")
             userChoice = int(input("\nPlease type in the number of the choosen operation: "))
             if 1<= userChoice <=5:
                 break       
             else:
                 raise
         except:
-             error()
+             error() # Loads the function to show something went wrong 
         
 
     match userChoice:
         case 1:
             # ---------------------------------------------------------------------------------------------
+            # ---------------------------------------------------------------------------------------------
             # 1. LOADING
-            loadData()
-            menu()
+            loadData() # Loads the function to load a data set
+            menu() # Loads the function to enter the menu
 
 
         case 2:
+            # ---------------------------------------------------------------------------------------------
             # ---------------------------------------------------------------------------------------------
             # 2. TRAINING 
             if successLoad == 0:
@@ -141,16 +145,15 @@ while menuEdit == 1:
                 print("**********************************************************")
                 print("******************* Training Algorithms ******************")
                 print("*                                                        *")
-                print("* Please choose one of the following options:            *")
+                print("* Enter your test/train mixture before you choose one    *")
+                print("* of the following options:                              *")
                 print("*                                                        *")
                 print("*(1) Split the data and train with the lazy learner - KNN*")
                 print("*(2) Split the data and train with Decision Trees        *")
                 print("**********************************************************")
 
                 # -----------------------------------------------------------------------------------------
-                # Ask the user of the test/train percentage set up
-                print("To set up the test/train set you have to decide about the mixture, e.g. 20/80 or 50/50")
-                
+                # Ask the user of the test/train percentage set up          
   
                 for i in range(attemps):
                     try:
@@ -161,14 +164,14 @@ while menuEdit == 1:
                             testPerc = None
                             raise
                     except:
-                        error()
+                        error() # Loads the function to show something went wrong 
 
                 if testPerc is None:
                     testPerc = 0.2
                     print("\nYou have typed in the wrong input multiple times.")
                     print(f"We will be setting the value to {testPerc*100}% for you!")
 
-                    
+                # -----------------------------------------------------------------------------------------
 
                 # Split the data into STRATIFIED train/test sets:
                 strat_feat_train, strat_feat_test, strat_classes_train, strat_classes_test = train_test_split(
@@ -193,10 +196,9 @@ while menuEdit == 1:
 
                 # -----------------------------------------------------------------------------------------
 
-
                 for i in range(attemps): # Able to run into an error x attemps until you have the possibility to exit this action
                     try:
-                        userChoice = int(input("\nPlease type in the number of the choosen algorithm: "))
+                        userChoice = int(input("\nPlease type in the number of the choosen algorithm now: "))
                         match userChoice:
                             case 1:
                                 # Trains this Knn Classifier with the training set obtained previously:
@@ -204,7 +206,7 @@ while menuEdit == 1:
                                 algoChoice = 1
                                 modelTrained = 1
 
-                                print ("You have trained this stratified set of data with a KNN classifier!")
+                                print ("You have trained this stratified set of data with a KNN classifier!\n")
                                 break
 
                             case 2:
@@ -213,17 +215,18 @@ while menuEdit == 1:
                                 algoChoice = 2
                                 modelTrained = 1
 
-                                print ("You have trained this stratified set of data with an Dessicion Tree classifier!") 
+                                print ("You have trained this stratified set of data with an Dessicion Tree classifier!\n") 
                                 break
 
                             case _: 
                                 raise      
     
                     except:
-                        error()
-                        menu()
+                        error() # Loads the function to show something went wrong 
+                        menu() # Loads the function to show the menu
 
         case 3:
+            # ---------------------------------------------------------------------------------------------
             # ---------------------------------------------------------------------------------------------
             # 3. EVALUATION
             if modelTrained == 1:
@@ -237,31 +240,38 @@ while menuEdit == 1:
                 print("*(2) Do not load a file and work with another strategy.  *")
                 print("**********************************************************")
 
+                # -----------------------------------------------------------------------------------------
 
                 userChoice = int(input("Please type in the number of the choosen evaluation: "))
                 match userChoice:
 
                     case 1:
-                        evalfile = input("Type the name of the file: ")
-                        df2 = pd.read_csv(evalfile)
-                        
-                        features2 = df2.drop("class",axis=1)
-                        classes2 = df2["class"]
-                        preprocessed_features2 = preprocessor.transform(features2)
-                        if algoChoice == 1:
-                            predictions2 = knn.predict(preprocessed_features2)
+                        while userattempt == 1:
+                            try:
+                                evalfile = input("Type the name of the file: ")
+                                df2 = pd.read_csv(evalfile)
 
-                        elif algoChoice == 2:
-                            predictions2 = dt.predict(preprocessed_features2)
-                        
-                        else: 
-                            error()
+                                features2 = df2.drop("class",axis=1)
+                                classes2 = df2["class"]
+                                preprocessed_features2 = preprocessor.transform(features2)
+                                if algoChoice == 1:
+                                    predictions2 = knn.predict(preprocessed_features2)
 
-                        # Prints the metrics
-                        print("Accuracy:", accuracy_score(classes2, predictions2))
-                        print("Precision:", precision_score(classes2, predictions2, average='weighted'))
-                        '''print("Recall:", recall_score(classes2, predictions2, average='weighted'))'''
-                
+                                elif algoChoice == 2:
+                                    predictions2 = dt.predict(preprocessed_features2)
+                                
+                                else: 
+                                    error() # Loads the function to show something went wrong 
+
+                                # Prints the metrics
+                                print("Accuracy:", accuracy_score(classes2, predictions2))
+                                print("Precision:", precision_score(classes2, predictions2, average='weighted'))
+                                '''print("Recall:", recall_score(classes2, predictions2, average='weighted'))'''                                
+                                break
+                            except:
+                                error() # Loads the function to show something went wrong
+                                menu() # Loads the function to show the menu
+                                        
                     case 2:
                         if algoChoice == 1:
                             predictions = knn.predict(preprocessed_strat_feat_test)
@@ -270,13 +280,14 @@ while menuEdit == 1:
                             predictions = dt.predict(preprocessed_strat_feat_test)
                         
                         else: 
-                            error()
+                            error() # Loads the function to show something went wrong 
 
                         # Prints the metrics
                         print("Accuracy:", accuracy_score(strat_classes_test, predictions))
                         print("Precision:", precision_score(strat_classes_test, predictions, average='weighted'))
                         '''print("Recall:", recall_score(strat_classes_test, predictions, average='weighted'))'''
                 
+                # -----------------------------------------------------------------------------------------
                 
                 # Savings results
                 userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
@@ -293,15 +304,17 @@ while menuEdit == 1:
                 elif userChoice == 2:
                     print ("You have not saved these results!")   
                 else:
-                    error()  
+                    error() # Loads the function to show something went wrong 
             else:
                 print("You have not trained any models yet!")
-            menu()
+            menu() # Loads the function to show the menu
 
         case 4:
             # ---------------------------------------------------------------------------------------------
+            # ---------------------------------------------------------------------------------------------
             # 4. SIMULATION
             if modelTrained == 1:
+
                 print("**********************************************************")
                 print("*********************** Simulation ***********************")
                 print("*                                                        *")
@@ -309,6 +322,7 @@ while menuEdit == 1:
                 print("* to simulate.                                           *")
                 print("**********************************************************")
 
+                # -----------------------------------------------------------------------------------------
 
                 class simu():
 
@@ -326,6 +340,8 @@ while menuEdit == 1:
                     def printObj(self):
                         return(self.buying, self.maint, self.doors, self.persons, self.lug_boot)
 
+                # -----------------------------------------------------------------------------------------
+
                 simuList = []
 
                 while objectAdd == 1:
@@ -335,45 +351,48 @@ while menuEdit == 1:
                         if buying in ["vhigh", "high", "med", "low"]:
                             break
                         else:
-                            error()
+                            error() # Loads the function to show something went wrong 
                     while objectAdd == 1:
                         maint = input(f"How is the maintenance?(vhigh, high, med, low): ")
                         if maint in ["vhigh", "high", "med", "low"]:
                             break
                         else:
-                            error()
+                            error() # Loads the function to show something went wrong 
                     while objectAdd == 1:
                         doors = input(f"How many doors are existing?(2, 3, 4, 5more): ")
                         if doors in ["2", "3", "4", "5more"]:
                             break
                         else:
-                            error()
+                            error() # Loads the function to show something went wrong 
                     while objectAdd == 1:
                         persons = input(f"How many persons fit in?(2, 4, more): ")
                         if persons in ["2", "4", "more"]:
                             break
                         else:
-                            error()
+                            error() # Loads the function to show something went wrong 
                     while objectAdd == 1:
                         lug_boot = input(f"What is the size of the luggage boot?(small, med, big): ")
                         if lug_boot in ["small", "med", "big"]:
                             break
                         else:
-                            error()
+                            error() # Loads the function to show something went wrong 
                     while objectAdd == 1:
                         safety = input(f"How safe is the car?(low, med, high.): ")
                         if safety in ["low", "med", "high"]:
                             break
                         else:
-                            error()
-                object = simu(buying, maint, doors, persons, lug_boot, safety)
-                simuList.append(object)
-                objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
+                            error() # Loads the function to show something went wrong 
 
-                print("The following objects have been submitted to the list:")
+                    object = simu(buying, maint, doors, persons, lug_boot, safety)
+                    simuList.append(object)
+                    objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
+
+                # -----------------------------------------------------------------------------------------
+
+                print("\nThe following objects have been submitted to the list:")
                 for j in simuList:
                     print(j.printObj())  
-                print("The predicted class for each object is:")
+                print("\nThe predicted class for each object is:")
 
                 dfsimuList = pd.DataFrame([vars(obj) for obj in simuList])
                 print(dfsimuList.columns.tolist())
@@ -389,16 +408,17 @@ while menuEdit == 1:
                 # Apply preprocessing to the training set:
                 preprocessed_df_simuList = preprocessor2.fit_transform(dfsimuList)
                 predictions3 = knn.predict(preprocessed_df_simuList)
+
+                # -----------------------------------------------------------------------------------------
+
             else:
                 print("The model has not been trained so far!")
                 print("Please make sure you loaded and trained a data set")
-                menu()
-
-            
+                menu() # Loads the function to show the menu
 
         case 5:
-            end()
+            end() # Loads the function to end code
 
         case _:
-            error()
-            menu()
+            error() # Loads the function to show something went wrong 
+            menu() # Loads the function to show the menu
