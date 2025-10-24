@@ -20,12 +20,12 @@ Ideally you want to create a menu, which will allow the user to
    If the user says yes, the software asks for the file name and saves the results information there. CHECK
    
 5. Simulate a real environment
-   Simulate a real environment where the user can input a new unseen example without the class information and the system will return the result from using the classification model.
-   If the user did not train any models yet, the software must tell the user that first they need to train a classification model.
-   If the user trained methods, then it asks for the user to input information related to the attributes used for the problem and uses that information to ask the classification model for the correct response.
-   The output of this method is the predicted class.
+   Simulate a real environment where the user can input a new unseen example without the class information and the system will return the result from using the classification model. CHECK
+   If the user did not train any models yet, the software must tell the user that first they need to train a classification model. CHECK
+   If the user trained methods, then it asks for the user to input information related to the attributes used for the problem and uses that information to ask the classification model for the correct response. 
+   The output of this method is the predicted class. CHECK
 
 
 TO DO
 - create a menu to load, train, evaluate and simulate a dataset CHECK
-- Improvement of the code --> setting up a variable to give the user the choice to choose of how much percentage he wants to train the datas on (80 - 20 %)
+- Improvement of the code --> setting up a variable to give the user the choice to choose of how much percentage he wants to train the datas on (80 - 20 %) CHECK

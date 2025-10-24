@@ -95,7 +95,7 @@ def end(): # Code end
     
 
 # ---------------------------------------------------------------------------------------------
-# Display menu entry
+# Display menu intro
 print("**********************************************************")
 print("********************* Project Robert *********************")
 print("**********************************************************")
@@ -169,8 +169,6 @@ while menuEdit == 1:
                     testPerc = 0.2
                     print("\nYou have typed in the wrong input multiple times.")
                     print(f"We will be setting the value to {testPerc*100}% for you!")
-
-                # -----------------------------------------------------------------------------------------
 
                 # -----------------------------------------------------------------------------------------
                 # Split the data into STRATIFIED train/test sets:
