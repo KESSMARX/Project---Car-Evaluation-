@@ -240,7 +240,16 @@ while menuEdit == 1:
 
                 # -----------------------------------------------------------------------------------------
 
-                userChoice = int(input("Please type in the number of the choosen evaluation: "))
+                while userattempt == 1: # Safety loop to prevent an error
+                    try:
+                        userChoice = int(input("Please type in the number of the choosen evaluation: "))
+                        if userChoice <= 2:
+                            break
+                        else:
+                            raise
+                    except:
+                        error()
+                
                 match userChoice:
 
                     case 1:
@@ -291,7 +300,9 @@ while menuEdit == 1:
                 while userattempt == 1: # Safety loop to prevent an error
                     try:
                         userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
-                        if userChoice > 2:
+                        if userChoice <= 2:
+                            break
+                        else:
                             raise
                     except:
                         error()
