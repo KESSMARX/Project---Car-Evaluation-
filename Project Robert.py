@@ -9,28 +9,28 @@ from sklearn.metrics import accuracy_score, recall_score, precision_score  # Imp
 
 # ---------------------------------------------------------------------------------------------
 # Variables set up
-userChoice = 0
-menuEdit = 1
-successLoad = 0  
-attempts = 3                                     # Attemps until the code asks if you want to exit
+userChoice = 0                                  # Necessary to give the system a call on what we choose
+menuEdit = 1                                    # Keeps the loop running until we want to exit the menu
+successLoad = 0                                 # Shows if we successfully loaded a data set
+attempts = 3                                    # Attemps until the code asks if you want to exit
 userattempt = 1                                 # Attemp set to check
-testPerc = None
-preprocessor = 0
-algoChoice = 0
+testPerc = None                                 # Test set percentage we want to set before running the training
+preprocessor = 0                                # 
+algoChoice = 0                                  # 
 knn = KNeighborsClassifier(n_neighbors=1)       # Creates a Knn Classifier Object with k=1
-dt = DecisionTreeClassifier(random_state=77)    # Creates a Decision tree classifier object
-predictions = 0
-features = 0
-classes = 0
-modelTrained = 0
-filename = ""
-objectAdd = 1
+dt = DecisionTreeClassifier(random_state=77)    # Creates a Decision tree classifier object 
+predictions = 0                                 # Gives us the preditcion of the trained set
+features = 0                                    # Divides the data into features
+classes = 0                                     # Divides one column of the data into classes
+modelTrained = 0                                # Shows if the model is trained or not
+filename = ""                                   # Variable for saving results with the typed in filename
+objectAdd = 1                                   # Show if there was an simulation object added or not
 
 # ---------------------------------------------------------------------------------------------
 # Function set up
 def loadData(): # Function to load a data set
     global userattempt
-    while userattempt == 1:
+    while userattempt == 1: # Safety loop to prevent an error
         try:
             url = input("Insert the name for the dataset: ")
             global successLoad # calling the global variable 
@@ -72,7 +72,7 @@ def error(): # Function to show something went wrong
 
 def menu(): # Function to show the menu
     global userattempt, menuEdit # calling global variable
-    while userattempt == 1:
+    while userattempt == 1: # Safety loop to prevent an error
         try:
             menuEdit = int(input("\n(1) continue or (2) exit \n"))
             if 1<= menuEdit <= 2: # Approval of integer (1 or 2)
@@ -107,7 +107,7 @@ print("*                                                        *")
 # ---------------------------------------------------------------------------------------------
 # Programm start
 while menuEdit == 1:
-    while userattempt == 1:
+    while userattempt == 1: # Safety loop to prevent an error
         try:
             print("**********************************************************")
             print("*(1) Load a data set.                                    *")
@@ -154,7 +154,7 @@ while menuEdit == 1:
                 # -----------------------------------------------------------------------------------------
                 # Ask the user of the test/train percentage set up          
   
-                for i in range(attempts):
+                for i in range(attempts): # Safety loop to prevent an error for X times
                     try:
                         testPerc = int(input("Please type in the percentage of the testing data set: "))/100
                         if 0 <= testPerc <= 1:
@@ -244,7 +244,7 @@ while menuEdit == 1:
                 match userChoice:
 
                     case 1:
-                        while userattempt == 1:
+                        while userattempt == 1: # Safety loop to prevent an error
                             try:
                                 evalfile = input("Type the name of the file: ")
                                 df2 = pd.read_csv(evalfile)
@@ -288,7 +288,13 @@ while menuEdit == 1:
                 # -----------------------------------------------------------------------------------------
                 
                 # Savings results
-                userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
+                while userattempt == 1: # Safety loop to prevent an error
+                    try:
+                        userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
+                        if userChoice > 2:
+                            raise
+                    except:
+                        error()
                 if userChoice == 1:
                     filename = input("Please type in the name of the document: ")
                     with open(filename, "w") as f:
@@ -322,7 +328,7 @@ while menuEdit == 1:
 
                 # -----------------------------------------------------------------------------------------
 
-                class simu():
+                class simu(): # Class definition
                     def __init__(self, buying, maint, doors, persons, lug_boot, safety):
                         self.buying = buying
                         self.maint = maint
@@ -343,37 +349,37 @@ while menuEdit == 1:
 
                 while objectAdd == 1:
                     print("Please enter the values for an object you would like to simulate.")
-                    while objectAdd == 1:
+                    while objectAdd == 1: # Safety loop to prevent an error
                         buying = input(f"How is the buying?(vhigh, high, med, low): ")
                         if buying in ["vhigh", "high", "med", "low"]:
                             break
                         else:
                             error() # Loads the function to show something went wrong 
-                    while objectAdd == 1:
+                    while objectAdd == 1: # Safety loop to prevent an error
                         maint = input(f"How is the maintenance?(vhigh, high, med, low): ")
                         if maint in ["vhigh", "high", "med", "low"]:
                             break
                         else:
                             error() # Loads the function to show something went wrong 
-                    while objectAdd == 1:
+                    while objectAdd == 1: # Safety loop to prevent an error
                         doors = input(f"How many doors are existing?(2, 3, 4, 5more): ")
                         if doors in ["2", "3", "4", "5more"]:
                             break
                         else:
                             error() # Loads the function to show something went wrong 
-                    while objectAdd == 1:
+                    while objectAdd == 1: # Safety loop to prevent an error
                         persons = input(f"How many persons fit in?(2, 4, more): ")
                         if persons in ["2", "4", "more"]:
                             break
                         else:
                             error() # Loads the function to show something went wrong 
-                    while objectAdd == 1:
+                    while objectAdd == 1: # Safety loop to prevent an error
                         lug_boot = input(f"What is the size of the luggage boot?(small, med, big): ")
                         if lug_boot in ["small", "med", "big"]:
                             break
                         else:
                             error() # Loads the function to show something went wrong 
-                    while objectAdd == 1:
+                    while objectAdd == 1: # Safety loop to prevent an error
                         safety = input(f"How safe is the car?(low, med, high.): ")
                         if safety in ["low", "med", "high"]:
                             break
@@ -382,7 +388,19 @@ while menuEdit == 1:
 
                     object = simu(buying, maint, doors, persons, lug_boot, safety)
                     simuList.append(object)
-                    objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
+                    while userattempt == 1: # Safety loop to prevent an error
+                        try:
+                            objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
+                            if objectAdd == 1:
+                                break
+                            elif objectAdd ==2:
+                                break
+                            else:
+                                raise
+                        except:
+                            error()
+                
+                objectAdd = 1 # reset of variable for loop usage
 
                 # -----------------------------------------------------------------------------------------
 
