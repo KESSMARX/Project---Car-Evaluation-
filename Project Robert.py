@@ -401,7 +401,7 @@ while menuEdit == 1:
                     simuList.append(object)
                     while userattempt == 1: # Safety loop to prevent an error
                         try:
-                            objectAdd = int(input("Do you like to add another object? (1)yes (2)no: "))
+                            objectAdd = int(input("Would you like to add another object? (1)yes (2)no: "))
                             if objectAdd == 1:
                                 break
                             elif objectAdd ==2:
