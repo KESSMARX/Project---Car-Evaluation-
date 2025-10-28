@@ -228,7 +228,7 @@ while menuEdit == 1:
             # 3. EVALUATION
             if modelTrained == 1:
                 
-                print("**********************************************************")
+                print("\n**********************************************************")
                 print("*********************** Evaluation ***********************")
                 print("*                                                        *")
                 print("* Please choose one of the following options:            *")
@@ -329,7 +329,7 @@ while menuEdit == 1:
             # 4. SIMULATION
             if modelTrained == 1:
 
-                print("**********************************************************")
+                print("\n**********************************************************")
                 print("*********************** Simulation ***********************")
                 print("*                                                        *")
                 print("* Please enter the values for an object you would like   *")
