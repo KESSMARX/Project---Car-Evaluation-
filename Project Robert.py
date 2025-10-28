@@ -16,7 +16,7 @@ attempts = 3                                    # Attemps until the code asks if
 userattempt = 1                                 # Attemp set to check
 testPerc = None                                 # Test set percentage we want to set before running the training
 preprocessor = 0                                # 
-algoChoice = 0                                  # 
+algoChoice = 0                                  # Variable to store which algorithm we decided to choose
 knn = KNeighborsClassifier(n_neighbors=1)       # Creates a Knn Classifier Object with k=1
 dt = DecisionTreeClassifier(random_state=77)    # Creates a Decision tree classifier object 
 predictions = 0                                 # Gives us the preditcion of the trained set
@@ -398,6 +398,7 @@ while menuEdit == 1:
 
                     object = simu(buying, maint, doors, persons, lug_boot, safety)
                     simuList.append(object)
+                    
                     while userattempt == 1: # Safety loop to prevent an error
                         try:
                             objectAdd = int(input("Would you like to add another object? (1)yes (2)no: "))
