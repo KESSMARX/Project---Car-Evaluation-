@@ -153,7 +153,7 @@ while menuEdit == 1:
   
                 for i in range(attempts): # Safety loop to prevent an error for X times
                     try:
-                        testPerc = int(input("Please type in the percentage of the testing data set: "))/100
+                        testPerc = int(input("Please type in the percentage of the testing data set e.g.:(30): "))/100
                         if 0 <= testPerc <= 1:
                             break # ends the loop here
                         else:
@@ -207,7 +207,7 @@ while menuEdit == 1:
                                 break # ends the loop here
 
                             case 2:
-                                # Trains this Knn Classifier with the training set obtained previously:
+                                # Trains this Decision Tree Classifier with the training set obtained previously:
                                 dt.fit(preprocessed_strat_feat_train, strat_classes_train)
                                 algoChoice = 2
                                 modelTrained = 1
@@ -270,9 +270,13 @@ while menuEdit == 1:
                                     error() # Loads the function to show something went wrong 
 
                                 # Prints the metrics
+                                # Accuracy: Number of correctly predicted examples of each class in relation to the total number of examples.
                                 print("Accuracy:", accuracy_score(classes2, predictions2))
+                                # Precision: Number of correct classifications per class in relation to the number of examples predicted as being of that class.
                                 print("Precision:", precision_score(classes2, predictions2, average='weighted'))
-                                '''print("Recall:", recall_score(classes2, predictions2, average='weighted'))'''                                
+                                '''print("Recall:", recall_score(classes2, predictions2, average='weighted'))'''
+
+                                loadedFile = True                                
                                 break # ends the loop here
                             except:
                                 error() # Loads the function to show something went wrong
@@ -289,9 +293,13 @@ while menuEdit == 1:
                             error() # Loads the function to show something went wrong 
 
                         # Prints the metrics
+                        # Accuracy: Number of correctly predicted examples of each class in relation to the total number of examples.
                         print("Accuracy:", accuracy_score(strat_classes_test, predictions))
+                        # Precision: Number of correct classifications per class in relation to the number of examples predicted as being of that class.
                         print("Precision:", precision_score(strat_classes_test, predictions, average='weighted'))
                         '''print("Recall:", recall_score(strat_classes_test, predictions, average='weighted'))'''
+
+                        loadedFile = False
                 
                 # -----------------------------------------------------------------------------------------
                 
@@ -309,10 +317,16 @@ while menuEdit == 1:
                     filename = input("Please type in the name of the document: ")
                     with open(filename, "w") as f:
                         f.write(f"{filename}\n")
-                        f.write(f"Accuracy: {accuracy_score(strat_classes_test, predictions)}\n")
-                        f.write(f"Precision: {precision_score(strat_classes_test, predictions, average='weighted')}\n")
-                        '''f.write(f"Recall: {recall_score(strat_classes_test, predictions, average='weighted')}\n")'''
-                        f.write(f"Predictions:\n{predictions}")
+                        if loadedFile == True:
+                            f.write(f"Accuracy: {accuracy_score(classes2, predictions2)}\n")
+                            f.write(f"Precision: {precision_score(classes2, predictions2, average='weighted')}\n")
+                            '''f.write(f"Recall: {recall_score(classes2, predictions2, average='weighted')}\n")'''
+                            f.write(f"Predictions:\n{predictions2}")
+                        else:
+                            f.write(f"Accuracy: {accuracy_score(strat_classes_test, predictions)}\n")
+                            f.write(f"Precision: {precision_score(strat_classes_test, predictions, average='weighted')}\n")
+                            '''f.write(f"Recall: {recall_score(strat_classes_test, predictions, average='weighted')}\n")'''
+                            f.write(f"Predictions:\n{predictions}")
                     print ("You have successfully saved these results!")
 
                 elif userChoice == 2:
@@ -346,9 +360,6 @@ while menuEdit == 1:
                         self.persons = persons
                         self.lug_boot = lug_boot
                         self.safety = safety
-                    
-                    def string(self):
-                        return f"{self.buying}, {self.maint}, {self.doors}, {self.persons}, {self.lug_boot}, {self.safety}"
 
                     def printObj(self):
                         return(self.buying, self.maint, self.doors, self.persons, self.lug_boot)
@@ -425,10 +436,10 @@ while menuEdit == 1:
 
                 # Apply preprocessing to the training set:
                 preprocessed_df_simuList = preprocessor.transform(dfsimuList)
-                try:
-                    predictions3 = dt.predict(preprocessed_df_simuList)
-                except:
+                if algoChoice == 1:
                     predictions3 = knn.predict(preprocessed_df_simuList)
+                elif algoChoice == 2:
+                    predictions3 = dt.predict(preprocessed_df_simuList)
                 print(predictions3)
                 menu()
 
