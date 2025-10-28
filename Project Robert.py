@@ -309,9 +309,9 @@ while menuEdit == 1:
                     filename = input("Please type in the name of the document: ")
                     with open(filename, "w") as f:
                         f.write(f"{filename}\n")
-                        f.write(f"Accuracy: {accuracy_score}")
-                        f.write(f"Precision: {precision_score}")
-                        f.write(f"Recall: {recall_score}")
+                        f.write(f"Accuracy: {accuracy_score(strat_classes_test, predictions)}\n")
+                        f.write(f"Precision: {precision_score(strat_classes_test, predictions, average='weighted')}\n")
+                        '''f.write(f"Recall: {recall_score(strat_classes_test, predictions, average='weighted')}\n")'''
                         f.write(f"Predictions:\n{predictions}")
                     print ("You have successfully saved these results!")
 
