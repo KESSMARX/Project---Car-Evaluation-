@@ -1,5 +1,5 @@
-import pandas as pd
-import sys
+import pandas as pd                                                        # Imports panda for data frame set up
+import sys                                                                 # Imports function to end the code  
 from sklearn.model_selection import train_test_split                       # Imports functionality from Scikit Learning
 from sklearn.tree import DecisionTreeClassifier                            # Imports Decision Tree Classifier from Scikit Learning
 from sklearn.neighbors import KNeighborsClassifier                         # Imports kNN Classifier Implementation from Scikit Learning
@@ -71,15 +71,14 @@ def error(): # Function to show something went wrong
 
 
 def menu(): # Function to show the menu
-    global userattempt, menuEdit # calling global variable
+    global userattempt, menuEdit # calling global variables
     while userattempt == 1: # Safety loop to prevent an error
         try:
             menuEdit = int(input("\n(1) continue or (2) exit \n"))
             if 1<= menuEdit <= 2: # Approval of integer (1 or 2)
-                #Display the menu
-                break   
+                break # ends the loop here
             else:
-                raise        
+                raise # ends with an error   
         
         except: 
             error() # Loads the function to show something went wrong 
@@ -118,9 +117,9 @@ while menuEdit == 1:
             print("**********************************************************")
             userChoice = int(input("\nPlease type in the number of the choosen operation: "))
             if 1<= userChoice <=5:
-                break       
+                break # ends the loop here      
             else:
-                raise
+                raise # ends with an error 
         except:
              error() # Loads the function to show something went wrong 
         
@@ -158,10 +157,10 @@ while menuEdit == 1:
                     try:
                         testPerc = int(input("Please type in the percentage of the testing data set: "))/100
                         if 0 <= testPerc <= 1:
-                            break
+                            break # ends the loop here
                         else:
                             testPerc = None
-                            raise
+                            raise # ends with an error 
                     except:
                         error() # Loads the function to show something went wrong 
 
@@ -205,7 +204,7 @@ while menuEdit == 1:
                                 modelTrained = 1
 
                                 print ("You have trained this stratified set of data with a KNN classifier!\n")
-                                break
+                                break # ends the loop here
 
                             case 2:
                                 # Trains this Knn Classifier with the training set obtained previously:
@@ -214,10 +213,10 @@ while menuEdit == 1:
                                 modelTrained = 1
 
                                 print ("You have trained this stratified set of data with an Dessicion Tree classifier!\n") 
-                                break
+                                break # ends the loop here
 
                             case _: 
-                                raise      
+                                raise # ends with an error     
     
                     except:
                         error() # Loads the function to show something went wrong 
@@ -244,9 +243,9 @@ while menuEdit == 1:
                     try:
                         userChoice = int(input("Please type in the number of the choosen evaluation: "))
                         if userChoice <= 2:
-                            break
+                            break # ends the loop here
                         else:
-                            raise
+                            raise # ends with an error 
                     except:
                         error()
                 
@@ -274,7 +273,7 @@ while menuEdit == 1:
                                 print("Accuracy:", accuracy_score(classes2, predictions2))
                                 print("Precision:", precision_score(classes2, predictions2, average='weighted'))
                                 '''print("Recall:", recall_score(classes2, predictions2, average='weighted'))'''                                
-                                break
+                                break # ends the loop here
                             except:
                                 error() # Loads the function to show something went wrong
                                 menu() # Loads the function to show the menu
@@ -301,9 +300,9 @@ while menuEdit == 1:
                     try:
                         userChoice = int(input("Would you like to save the results? (1)Yes (2)No"))
                         if userChoice <= 2:
-                            break
+                            break # ends the loop here
                         else:
-                            raise
+                            raise # ends with an error 
                     except:
                         error()
                 if userChoice == 1:
@@ -363,25 +362,25 @@ while menuEdit == 1:
                     while objectAdd == 1: # Safety loop to prevent an error
                         buying = input(f"How is the buying?(vhigh, high, med, low): ")
                         if buying in ["vhigh", "high", "med", "low"]:
-                            break
+                            break # ends the loop here
                         else:
                             error() # Loads the function to show something went wrong 
                     while objectAdd == 1: # Safety loop to prevent an error
                         maint = input(f"How is the maintenance?(vhigh, high, med, low): ")
                         if maint in ["vhigh", "high", "med", "low"]:
-                            break
+                            break # ends the loop here
                         else:
                             error() # Loads the function to show something went wrong 
                     while objectAdd == 1: # Safety loop to prevent an error
                         doors = input(f"How many doors are existing?(2, 3, 4, 5more): ")
                         if doors in ["2", "3", "4", "5more"]:
-                            break
+                            break # ends the loop here
                         else:
                             error() # Loads the function to show something went wrong 
                     while objectAdd == 1: # Safety loop to prevent an error
                         persons = input(f"How many persons fit in?(2, 4, more): ")
                         if persons in ["2", "4", "more"]:
-                            break
+                            break # ends the loop here
                         else:
                             error() # Loads the function to show something went wrong 
                     while objectAdd == 1: # Safety loop to prevent an error
@@ -393,7 +392,7 @@ while menuEdit == 1:
                     while objectAdd == 1: # Safety loop to prevent an error
                         safety = input(f"How safe is the car?(low, med, high.): ")
                         if safety in ["low", "med", "high"]:
-                            break
+                            break # ends the loop here
                         else:
                             error() # Loads the function to show something went wrong 
 
@@ -403,11 +402,11 @@ while menuEdit == 1:
                         try:
                             objectAdd = int(input("Would you like to add another object? (1)yes (2)no: "))
                             if objectAdd == 1:
-                                break
+                                break # ends the loop here
                             elif objectAdd ==2:
-                                break
+                                break # ends the loop here
                             else:
-                                raise
+                                raise # ends with an error 
                         except:
                             error()
                 
