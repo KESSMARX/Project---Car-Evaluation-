@@ -140,14 +140,12 @@ while menuEdit == 1:
                 loadData()
 
             if successLoad == 1:
-                print("**********************************************************")
+                print("\n**********************************************************")
                 print("******************* Training Algorithms ******************")
                 print("*                                                        *")
                 print("* Enter your test/train mixture before you choose one    *")
-                print("* of the following options:                              *")
+                print("* of the learning algorithms.                            *")
                 print("*                                                        *")
-                print("*(1) Split the data and train with the lazy learner - KNN*")
-                print("*(2) Split the data and train with Decision Trees        *")
                 print("**********************************************************")
 
                 # -----------------------------------------------------------------------------------------
@@ -192,10 +190,12 @@ while menuEdit == 1:
                 preprocessed_strat_feat_test = preprocessor.transform(strat_feat_test)
 
                 # -----------------------------------------------------------------------------------------
-
+                print("\nPerfect, now, please choose the algorithm you want to train:")
+                print("(1) Train with the lazy learner - KNN")
+                print("(2) Train with Decision Trees")
                 for i in range(attempts): # Able to run into an error x attemps until you have the possibility to exit this action
                     try:
-                        userChoice = int(input("\nPlease type in the number of the choosen algorithm now: "))
+                        userChoice = int(input("\nPlease type in the number of the chosen algorithm: "))
                         match userChoice:
                             case 1:
                                 # Trains this Knn Classifier with the training set obtained previously:
